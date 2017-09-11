@@ -51,7 +51,7 @@ namespace Assets.Gamelogic.Core
             if(isBinBag){
                 playerEntityTemplate = EntityTemplateFactory.CreateBinbagTemplate(clientWorkerId);
             }else{
-                playerEntityTemplate = EntityTemplateFactory.CreatePlayerTemplate(clientWorkerId);
+                playerEntityTemplate = EntityTemplateFactory.CreateBinmanTemplate(clientWorkerId);
             }
             SpatialOS.WorkerCommands.CreateEntity(entityId, playerEntityTemplate)
                 .OnFailure(failure => OnFailedPlayerCreation(failure, clientWorkerId, entityId, isBinBag));
