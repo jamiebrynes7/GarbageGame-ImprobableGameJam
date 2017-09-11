@@ -1,0 +1,12 @@
+package improbable.player;
+
+enum Lean {
+	LEFT = 0;
+	NONE = 1;
+	RIGHT = 2;
+}
+
+component BinbagVisuals {
+    id = 1301;
+    Lean bag_lean = 1;
+}

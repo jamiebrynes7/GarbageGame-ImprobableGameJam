@@ -30,7 +30,7 @@ namespace Assets.Gamelogic.Core
                     break;
                 case WorkerPlatform.UnityClient:
                     Application.targetFrameRate = SimulationSettings.TargetClientFramerate;
-                    SpatialOS.OnConnected += CreatePlayer;
+                    SpatialOS.OnConnected += () => CreatePlayer(true);
                     break;
             }
 
@@ -39,15 +39,15 @@ namespace Assets.Gamelogic.Core
         }
 
         // Search for the PlayerCreator entity in the world in order to send a CreatePlayer command.
-        public static void CreatePlayer()
+        public static void CreatePlayer(bool isBinBag)
         {
             var playerCreatorQuery = Query.HasComponent<PlayerCreation>().ReturnOnlyEntityIds();
             SpatialOS.WorkerCommands.SendQuery(playerCreatorQuery)
-                .OnSuccess(OnSuccessfulPlayerCreatorQuery)
-                .OnFailure(OnFailedPlayerCreatorQuery);
+                     .OnSuccess(result => OnSuccessfulPlayerCreatorQuery(result, isBinBag))
+                     .OnFailure(details => OnFailedPlayerCreatorQuery(details, isBinBag));
         }
 
-        private static void OnSuccessfulPlayerCreatorQuery(EntityQueryResult queryResult)
+        private static void OnSuccessfulPlayerCreatorQuery(EntityQueryResult queryResult, bool isBinBag)
         {
             if (queryResult.EntityCount < 1)
             {
@@ -56,28 +56,28 @@ namespace Assets.Gamelogic.Core
             }
 
             var playerCreatorEntityId = queryResult.Entities.First.Value.Key;
-            RequestPlayerCreation(playerCreatorEntityId);
+            RequestPlayerCreation(playerCreatorEntityId, isBinBag);
         }
 
         // Retry a failed search for the PlayerCreator entity after a short delay.
-        private static void OnFailedPlayerCreatorQuery(ICommandErrorDetails _)
+        private static void OnFailedPlayerCreatorQuery(ICommandErrorDetails _, bool isBinBag)
         {
             Debug.LogError("PlayerCreator query failed. SpatialOS workers probably haven't started yet. Try again in a few seconds.");
-            TimerUtils.WaitAndPerform(SimulationSettings.PlayerCreatorQueryRetrySecs, CreatePlayer);
+            TimerUtils.WaitAndPerform(SimulationSettings.PlayerCreatorQueryRetrySecs, () => CreatePlayer(isBinBag));
         }
 
         // Send a CreatePlayer command to the PLayerCreator entity requesting a Player entity be spawned.
-        private static void RequestPlayerCreation(EntityId playerCreatorEntityId)
+        private static void RequestPlayerCreation(EntityId playerCreatorEntityId, bool isBinBag)
         {
-            SpatialOS.WorkerCommands.SendCommand(PlayerCreation.Commands.CreatePlayer.Descriptor, new CreatePlayerRequest(), playerCreatorEntityId)
-                .OnFailure(response => OnCreatePlayerFailure(response, playerCreatorEntityId));
+            SpatialOS.WorkerCommands.SendCommand(PlayerCreation.Commands.CreatePlayer.Descriptor, new CreatePlayerRequest(isBinBag), playerCreatorEntityId)
+                .OnFailure(response => OnCreatePlayerFailure(response, playerCreatorEntityId, isBinBag));
         }
 
         // Retry a failed creation of the Player entity after a short delay.
-        private static void OnCreatePlayerFailure(ICommandErrorDetails _, EntityId playerCreatorEntityId)
+        private static void OnCreatePlayerFailure(ICommandErrorDetails _, EntityId playerCreatorEntityId, bool isBinBag)
         {
             Debug.LogWarning("CreatePlayer command failed - you probably tried to connect too soon. Try again in a few seconds.");
-            TimerUtils.WaitAndPerform(SimulationSettings.PlayerEntityCreationRetrySecs, () => RequestPlayerCreation(playerCreatorEntityId));
+            TimerUtils.WaitAndPerform(SimulationSettings.PlayerEntityCreationRetrySecs, () => RequestPlayerCreation(playerCreatorEntityId, isBinBag));
         }
     }
 }

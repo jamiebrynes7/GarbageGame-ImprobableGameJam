@@ -1,6 +1,8 @@
 package improbable.core;
 
-type CreatePlayerRequest {}
+type CreatePlayerRequest {
+	bool is_bin_bag = 1;
+}
 type CreatePlayerResponse {}
 
 component PlayerCreation {

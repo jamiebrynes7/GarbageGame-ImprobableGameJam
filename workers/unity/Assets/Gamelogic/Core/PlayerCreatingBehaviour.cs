@@ -6,6 +6,7 @@ using Improbable.Unity;
 using Improbable.Unity.Core;
 using Improbable.Unity.Visualizer;
 using UnityEngine;
+using Improbable.Worker;
 
 namespace Assets.Gamelogic.Core
 {
@@ -27,34 +28,39 @@ namespace Assets.Gamelogic.Core
 
         private CreatePlayerResponse OnCreatePlayer(CreatePlayerRequest request, ICommandCallerInfo callerinfo)
         {
-            CreatePlayerWithReservedId(callerinfo.CallerWorkerId);
+            CreatePlayerWithReservedId(callerinfo.CallerWorkerId, request.isBinBag);
             return new CreatePlayerResponse();
         }
 
-        private void CreatePlayerWithReservedId(string clientWorkerId)
+        private void CreatePlayerWithReservedId(string clientWorkerId, bool isBinBag)
         {
             SpatialOS.Commands.ReserveEntityId(PlayerCreationWriter)
-                .OnSuccess(reservedEntityId => CreatePlayer(clientWorkerId, reservedEntityId.ReservedEntityId))
-                .OnFailure(failure => OnFailedReservation(failure, clientWorkerId));
+                .OnSuccess(reservedEntityId => CreatePlayer(clientWorkerId, reservedEntityId.ReservedEntityId, isBinBag))
+                .OnFailure(failure => OnFailedReservation(failure, clientWorkerId, isBinBag));
         }
 
-        private void OnFailedReservation(ICommandErrorDetails response, string clientWorkerId)
+        private void OnFailedReservation(ICommandErrorDetails response, string clientWorkerId, bool isBinBag)
         {
             Debug.LogError("Failed to Reserve EntityId for Player: " + response.ErrorMessage + ". Retrying...");
-            CreatePlayerWithReservedId(clientWorkerId);
+            CreatePlayerWithReservedId(clientWorkerId, isBinBag);
         }
 
-        private void CreatePlayer(string clientWorkerId, EntityId entityId)
+        private void CreatePlayer(string clientWorkerId, EntityId entityId, bool isBinBag)
         {
-            var playerEntityTemplate = EntityTemplateFactory.CreatePlayerTemplate(clientWorkerId);
+            Entity playerEntityTemplate;
+            if(isBinBag){
+                playerEntityTemplate = EntityTemplateFactory.CreateBinbagTemplate(clientWorkerId);
+            }else{
+                playerEntityTemplate = EntityTemplateFactory.CreatePlayerTemplate(clientWorkerId);
+            }
             SpatialOS.WorkerCommands.CreateEntity(entityId, playerEntityTemplate)
-                .OnFailure(failure => OnFailedPlayerCreation(failure, clientWorkerId, entityId));
+                .OnFailure(failure => OnFailedPlayerCreation(failure, clientWorkerId, entityId, isBinBag));
         }
 
-        private void OnFailedPlayerCreation(ICommandErrorDetails response, string clientWorkerId, EntityId entityId)
+        private void OnFailedPlayerCreation(ICommandErrorDetails response, string clientWorkerId, EntityId entityId, bool isBinBag)
         {
             Debug.LogError("Failed to Create Player Entity: " + response.ErrorMessage + ". Retrying...");
-            CreatePlayer(clientWorkerId, entityId);
+            CreatePlayer(clientWorkerId, entityId, isBinBag);
         }
     }
 }

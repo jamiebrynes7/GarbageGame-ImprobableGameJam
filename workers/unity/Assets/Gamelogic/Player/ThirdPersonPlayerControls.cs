@@ -18,11 +18,11 @@ namespace Assets.Gamelogic.Player
         [Require] private PlayerRotation.Writer PlayerRotationWriter;
 
         public Vector3 CurrentCanonicalPosition { get { return new Vector3((float)PositionWriter.Data.coords.x, 0, (float)PositionWriter.Data.coords.z); } }
-        private Transform camera;
+        protected Transform camera;
         private float cameraDistance;
         private float cameraYaw;
         private float cameraPitch;
-        private Vector3 targetVelocity;
+        protected Vector3 targetVelocity;
         private bool playerIsGrounded;
 
         [SerializeField] private Collider playerCollider;
@@ -78,7 +78,7 @@ namespace Assets.Gamelogic.Player
             playerAnimator.SetFloat("Turn", Mathf.Clamp(playerTurn, -0.8f, 0.8f));
         }
 
-        private void UpdateDesiredMovementDirection()
+        protected virtual void UpdateDesiredMovementDirection()
         {
             Vector3 inputDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             Vector3 movementDirection = (camera.transform.rotation * inputDirection).FlattenVector().normalized;
@@ -113,7 +113,8 @@ namespace Assets.Gamelogic.Player
             {
                 PositionWriter.Send(new Position.Update().SetCoords(new Coordinates(newTargetPosition.x, 0, newTargetPosition.z)));
                 PlayerMovementWriter.Send(new PlayerMovement.Update().AddMovementUpdate(new MovementUpdate(newTargetPosition.ToSpatialVector3d(), Time.time)));
-                PlayerRotationWriter.Send(new PlayerRotation.Update().SetYaw(transform.eulerAngles.y).AddRotationUpdate(new RotationUpdate(transform.eulerAngles.y, Time.time)));
+                PlayerRotationWriter.Send(new PlayerRotation.Update().SetYaw(transform.eulerAngles.y)
+                                          .AddRotationUpdate(new RotationUpdate(transform.eulerAngles.y, Time.time)));
             }
         }
 
