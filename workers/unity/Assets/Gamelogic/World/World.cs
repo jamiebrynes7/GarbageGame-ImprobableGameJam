@@ -26,8 +26,9 @@ namespace AssemblyCSharp
 				for (int x = -10; x < 10; x = x + 2) {
 					GameObject instance = Instantiate (Resources.Load("EntityPrefabs/Buildings/Prefab/abandoned_house")) as GameObject;
 					instance.transform.position = new Vector3 (x, 0, z);
-					instance.transform.localScale = new Vector3 (0.2f, 0.2f, 0.2f);
+					instance.transform.localScale = new Vector3 (0.15f, 0.15f, 0.15f);
 					instance.tag = "House";
+					instance.transform.parent = this.gameObject.transform;
 				}
 			}
 
