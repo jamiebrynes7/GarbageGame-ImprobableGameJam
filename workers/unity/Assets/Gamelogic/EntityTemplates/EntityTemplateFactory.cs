@@ -58,6 +58,22 @@ namespace Assets.Gamelogic.EntityTemplates
 			return template;
 		}
 
+		public static Entity CreateBinbagNPCTemplate(Vector3 position)
+		{
+			var template = EntityBuilder.Begin()
+                                        .AddPositionComponent(Vector3.zero, CommonRequirementSets.PhysicsOnly)
+				.AddMetadataComponent(SimulationSettings.BinbagPrefabName)
+				.SetPersistence(true)
+				.SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
+				.AddComponent(new PlayerRotation.Data(yaw: 0), CommonRequirementSets.PhysicsOnly)
+				.AddComponent(new PlayerMovement.Data(), CommonRequirementSets.PhysicsOnly)
+				.AddComponent(new BinbagVisuals.Data(Lean.NONE), CommonRequirementSets.PhysicsOnly)
+				.AddComponent(new BinbagInfo.Data(10), CommonRequirementSets.PhysicsOnly)
+				.Build();
+
+			return template;
+		}
+
 		public static Entity CreateStoneTemplate(Vector3 position)
 		{
 			var template = EntityBuilder.Begin()

@@ -35,6 +35,10 @@ namespace Assets.Gamelogic.Player
             PlayerMovementReader.MovementUpdateTriggered.Add(SaveMovementUpdate);
             PlayerRotationReader.RotationUpdateTriggered.Add(SaveRotationUpdate);
             DisableAuthoritativeRigidbodyBehaviour();
+
+            if(IsNPCBinBag()){
+                playerCollider.isTrigger = true;
+            }
         }
 
         private void OnDisable()
@@ -42,6 +46,10 @@ namespace Assets.Gamelogic.Player
             PlayerMovementReader.MovementUpdateTriggered.Remove(SaveMovementUpdate);
             PlayerRotationReader.RotationUpdateTriggered.Remove(SaveRotationUpdate);
             EnableAuthoritativeRigidbodyBehaviour();
+
+			if (IsNPCBinBag()){
+                playerCollider.isTrigger = false;
+			}
         }
 
         private void SaveMovementUpdate(MovementUpdate movementUpdate)
@@ -165,7 +173,13 @@ namespace Assets.Gamelogic.Player
         private void EnableAuthoritativeRigidbodyBehaviour()
         {
             playerRigidbody.useGravity = true;
-            playerRigidbody.isKinematic = false;
+            playerRigidbody.isKinematic = IsNPCBinBag();
+        }
+
+        private bool IsNPCBinBag(){
+            // YOLOYOLOYOLOYOLO
+            var clientInfo = GetComponent<BinbagClientNPCInfo>();
+            return clientInfo != null && clientInfo.IsNPCBinBag();
         }
 
         class InterpolationData<T>
