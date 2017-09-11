@@ -1,0 +1,6 @@
+package improbable.player;
+
+component BinbagInfo {
+    id = 1302;
+    uint32 health = 1;
+}

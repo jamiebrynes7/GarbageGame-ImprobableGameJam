@@ -2,7 +2,3 @@ spatial.log
 spatialos_worker_packages.json
 build/
 logs/
-*.meta
-*.unity.meta
-*.fbx.meta
-*.mat.meta
