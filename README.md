@@ -1,23 +1,27 @@
-# Starter Project
+# GameJam Starter Project
 ---
-
-*Copyright Improbable Worlds Ltd, 2017*
-
-- *GitHub repository*: [https://github.com/spatialos/StarterProject](https://github.com/spatialos/StarterProject)
+- [Advice Doc](https://docs.google.com/a/improbable.io/document/d/1AuNnuTwFS7f6TDnxDm0Ukeqbk82Fi9jw_kTc4gwUYhQ/edit?usp=sharing)
+- *GitHub repository*: [https://github.com/alastairdglennie/gamejam-starter-project](https://github.com/alastairdglennie/gamejam-starter-project)
 
 ---
 
 ## Introduction
 
-This is a SpatialOS starter project with useful core features that you can extend to build your own SpatialOS application.
+This is a SpatialOS starter project for a gamejam.
 
 It contains:
 
 * A Player spawned on client connection as per the [Unity Client Lifecycle Guide](https://spatialos.improbable.io/docs/reference/latest/tutorials/client-lifecycle).
+* A Script to visualize and interpolate other players within the game.
+* 3 different scripts to control player using either a first person, over the shoulder or third person camera.
 * A Cube spawned through a snapshot via an entity template method and an Unity prefab.
 * The rest of the features included in the [BlankProject](https://github.com/spatialos/BlankProject).
 
 If you run into problems, or want to give us feedback, please visit the [SpatialOS forums](https://forums.improbable.io/).
+
+## Choosing a camera
+
+With the project open in Unity, locate the `Player` prefab in the `EntityPrefabs` folder. The `OtherPlayerMovement` script is responsible for visualizing other players in your game as should remain on the prefab no matter what camera control you want. By default there is also a `ThirdPersonPlayerControls` script which, as you might imagine, gives the user a 3rd person camera to control the player. If you wish to change the camera controls, then first remove the `ThirdPersonPlayerControls` script and add either the `FirstPersonPlayerControls` or `OverTheShoulderPlayerControls` inside the `Gamelogic > Player` folder within Unity. Remember you'll have to also add the refernces back to the newly added MonoBehaviour. Any questions ping @alastair on Slack!
 
 ## Running the project
 
