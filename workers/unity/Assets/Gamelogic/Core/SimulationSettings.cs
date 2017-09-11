@@ -45,12 +45,12 @@ namespace Assets.Gamelogic.Core
         // Third Person Controls
         public static int ThirdPersonRotateCameraMouseButton = 1;
         public static float ThirdPersonCameraSensitivity = 4;
-        public static float ThirdPersonCameraDefaultDistance = 10;
+        public static float ThirdPersonCameraDefaultDistance = 20;
         public static float ThirdPersonCameraMinDistance = 5;
         public static float ThirdPersonCameraMaxDistance = 22;
         public static float ThirdPersonCameraDistanceSensitivity = 5;
         public static float ThirdPersonCameraMaxPitch = 70;
         public static float ThirdPersonCameraMinPitch = 20;
-        public static float ThirdPersonCameraDefaultPitch = 25;
+        public static float ThirdPersonCameraDefaultPitch = 60;
     }
 }
