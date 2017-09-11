@@ -18,6 +18,14 @@ namespace Assets.Gamelogic.Player
         [Require]
         private BinbagVisuals.Writer binbagVisualsWriter;
 
+        private void OnCollisionEnter(Collision collision)
+        {
+            if(collision.gameObject.tag == "Building"){
+                //transform.rotation = Quaternion.Euler(0f, 180f, 0f) * transform.rotation;
+                transform.Rotate(0f, 180f, 0f);
+            }
+        }
+
         override protected void UpdateDesiredMovementDirection()
         {
             float controlValue = Input.GetAxis("Horizontal");

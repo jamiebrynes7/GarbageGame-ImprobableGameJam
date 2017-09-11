@@ -20,7 +20,7 @@ namespace Assets.Editor
 			var currentEntityId = 1;
 
 			snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreatePlayerCreatorTemplate());
-			snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateCubeTemplate());
+			//snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateCubeTemplate());
 
 			SaveSnapshot(snapshotEntities);
 		}
