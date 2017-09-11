@@ -21,12 +21,12 @@ namespace AssemblyCSharp
 			// Create World
 
 			// Add Houses
-			this.gameObject.transform.localScale = new Vector3 (2, 1, 2);
-			for (int z = -10; z < 10; z = z + 3) {
-				for (int x = -10; x < 10; x = x + 2) {
+			this.gameObject.transform.localScale = new Vector3 (200, 1, 200);
+			for (int z = -10; z < 10; z++) {
+				for (int x = -10; x < 10; x++) {
 					GameObject instance = Instantiate (Resources.Load("EntityPrefabs/Buildings/Prefab/abandoned_house")) as GameObject;
-					instance.transform.position = new Vector3 (x, 0, z);
-					instance.transform.localScale = new Vector3 (0.15f, 0.15f, 0.15f);
+					instance.transform.position = new Vector3 (x * 15f, 0, z * 20f);
+					instance.transform.localScale = new Vector3 (1f, 1f, 1f);
 					instance.tag = "House";
 					instance.transform.parent = this.gameObject.transform;
 				}
