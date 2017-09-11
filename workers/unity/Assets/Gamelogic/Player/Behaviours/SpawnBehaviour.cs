@@ -13,9 +13,6 @@ namespace Assets.Gamelogic.Player.Behaviours
 		// Inject access to the entity's Health component
 		[Require] private BinbagInfo.Reader binbagInfoReader;
 
-		public Animation SinkingAnimation;
-		public GameObject ShipWashVfx;
-
 		private bool alreadySunk = false;
 
 		private void OnEnable()
