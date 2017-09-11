@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Assets.Gamelogic.EntityTemplates
 {
     public class EntityTemplateFactory : MonoBehaviour
-    {
+	{
         public static Entity CreatePlayerCreatorTemplate()
         {
             var template = EntityBuilder.Begin()
@@ -69,6 +69,22 @@ namespace Assets.Gamelogic.EntityTemplates
 
 			return template;
 		}
+
+        public static Entity CreateBinmanTemplate(string clientId)
+        {
+            var template = EntityBuilder.Begin()
+                .AddPositionComponent(Vector3.zero, CommonRequirementSets.SpecificClientOnly(clientId))
+                .AddMetadataComponent(SimulationSettings.BinmanPrefabName)
+                .SetPersistence(true)
+                .SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
+                .AddComponent(new ClientAuthorityCheck.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
+                .AddComponent(new ClientConnection.Data(SimulationSettings.TotalHeartbeatsBeforeTimeout), CommonRequirementSets.PhysicsOnly)
+                .AddComponent(new PlayerRotation.Data(yaw: 0), CommonRequirementSets.SpecificClientOnly(clientId))
+                .AddComponent(new PlayerMovement.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
+                .Build();
+
+            return template;
+        }
 
         public static Entity CreateCubeTemplate()
         {
