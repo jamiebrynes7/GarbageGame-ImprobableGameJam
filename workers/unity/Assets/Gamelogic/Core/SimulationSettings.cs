@@ -10,6 +10,8 @@ namespace Assets.Gamelogic.Core
         public static readonly string BinbagPrefabName = "Binbag";
         public static readonly string BinmanPrefabName = "Binman";
 
+        public static readonly float ClientConnectionTimeoutSecs = 7;
+
         public static readonly float HeartbeatCheckIntervalSecs = 3;
         public static readonly uint TotalHeartbeatsBeforeTimeout = 3;
         public static readonly float HeartbeatSendingIntervalSecs = 3;
