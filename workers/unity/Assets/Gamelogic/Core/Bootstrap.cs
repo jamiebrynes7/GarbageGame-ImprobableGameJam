@@ -6,6 +6,7 @@ using Improbable.Unity.Configuration;
 using Improbable.Unity.Core;
 using Improbable.Unity.Core.EntityQueries;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // Placed on a GameObject in a Unity scene to execute SpatialOS connection logic on startup.
 namespace Assets.Gamelogic.Core
@@ -14,9 +15,14 @@ namespace Assets.Gamelogic.Core
     {
         public WorkerConfigurationData Configuration = new WorkerConfigurationData();
 
+
+        // Boolean to handle whether to spawn player as binbag or binman. Defaults to binbag.
+        private bool isBinBag = true;
+
         // Called when the Play button is pressed in Unity.
         public void Start()
         {
+            SceneManager.LoadScene(BuildSettings.SplashScreenScene, LoadSceneMode.Additive);
             SpatialOS.ApplyConfiguration(Configuration);
 
             Time.fixedDeltaTime = 1.0f / SimulationSettings.FixedFramerate;
@@ -27,15 +33,24 @@ namespace Assets.Gamelogic.Core
                 case WorkerPlatform.UnityWorker:
                     Application.targetFrameRate = SimulationSettings.TargetServerFramerate;
                     SpatialOS.OnDisconnected += reason => Application.Quit();
+                    SpatialOS.Connect(gameObject);
                     break;
                 case WorkerPlatform.UnityClient:
                     Application.targetFrameRate = SimulationSettings.TargetClientFramerate;
-                    SpatialOS.OnConnected += () => CreatePlayer(true);
+                    SpatialOS.OnConnected += () => CreatePlayer(this.isBinBag);
                     break;
             }
+        }
 
-            // Enable communication with the SpatialOS layer of the simulation.
+        // Connect to game server
+        public void ConnectToClient() 
+        {
             SpatialOS.Connect(gameObject);
+        }
+
+        // Set isBinBag boolean for player spawning
+        public void SetIsBinBag(bool b) {
+            this.isBinBag = b;
         }
 
         // Search for the PlayerCreator entity in the world in order to send a CreatePlayer command.
@@ -62,7 +77,7 @@ namespace Assets.Gamelogic.Core
         // Retry a failed search for the PlayerCreator entity after a short delay.
         private static void OnFailedPlayerCreatorQuery(ICommandErrorDetails _, bool isBinBag)
         {
-            Debug.LogError("PlayerCreator query failed. SpatialOS workers probably haven't started yet. Try again in a few seconds.");
+            Debug.LogError("PlayerCreator query failed. Spati   alOS workers probably haven't started yet. Try again in a few seconds.");
             TimerUtils.WaitAndPerform(SimulationSettings.PlayerCreatorQueryRetrySecs, () => CreatePlayer(isBinBag));
         }
 
