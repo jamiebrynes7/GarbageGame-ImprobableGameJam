@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Improbable.Player;
+using Improbable.Unity;
 using Improbable.Unity.Visualizer;
 using UnityEngine;
 
+[WorkerType(WorkerPlatform.UnityClient)]
 public class BinbagVisualiser : MonoBehaviour {
 
     private static float LEAN_ANGLE = 15f;

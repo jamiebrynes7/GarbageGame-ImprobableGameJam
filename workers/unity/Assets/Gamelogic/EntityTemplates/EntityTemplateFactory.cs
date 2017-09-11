@@ -52,6 +52,19 @@ namespace Assets.Gamelogic.EntityTemplates
                 .AddComponent(new PlayerRotation.Data(yaw: 0), CommonRequirementSets.SpecificClientOnly(clientId))
 				.AddComponent(new PlayerMovement.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
                 .AddComponent(new BinbagVisuals.Data(Lean.NONE), CommonRequirementSets.SpecificClientOnly(clientId))
+                .AddComponent(new BinbagInfo.Data(10), CommonRequirementSets.PhysicsOnly)
+				.Build();
+
+			return template;
+		}
+
+		public static Entity CreateStoneTemplate(Vector3 position)
+		{
+			var template = EntityBuilder.Begin()
+                .AddPositionComponent(position, CommonRequirementSets.PhysicsOnly)
+				.AddMetadataComponent("Stone")
+				.SetPersistence(true)
+				.SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
 				.Build();
 
 			return template;
