@@ -17,9 +17,9 @@ namespace Assets.Gamelogic.Pirates.Behaviours
 
 			if (BinbagInfoWriter.Data.health <= 0)
 				return;
-			
 			if (other != null && other.gameObject.name == "Binman")
 			{
+				Debug.Log ("HIT");
 				uint newHealth = BinbagInfoWriter.Data.health - 1;
 				BinbagInfoWriter.Send (new BinbagInfo.Update().SetHealth(newHealth));
 			}
