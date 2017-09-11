@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Assets.Gamelogic.EntityTemplates
 {
     public class EntityTemplateFactory : MonoBehaviour
-    {
+	{
         public static Entity CreatePlayerCreatorTemplate()
         {
             var template = EntityBuilder.Begin()
