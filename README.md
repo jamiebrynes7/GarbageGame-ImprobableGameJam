@@ -17,8 +17,6 @@ It contains:
 * A Cube spawned through a snapshot via an entity template method and an Unity prefab.
 * The rest of the features included in the [BlankProject](https://github.com/spatialos/BlankProject).
 
-If you run into problems, or want to give us feedback, please visit the [SpatialOS forums](https://forums.improbable.io/).
-
 ## Choosing a camera
 
 With the project open in Unity, locate the `Player` prefab in the `EntityPrefabs` folder. The `OtherPlayerMovement` script is responsible for visualizing other players in your game as should remain on the prefab no matter what camera control you want. By default there is also a `ThirdPersonPlayerControls` script which, as you might imagine, gives the user a 3rd person camera to control the player. If you wish to change the camera controls, then first remove the `ThirdPersonPlayerControls` script and add either the `FirstPersonPlayerControls` or `OverTheShoulderPlayerControls` inside the `Gamelogic > Player` folder within Unity. Remember you'll have to also add the refernces back to the newly added MonoBehaviour. Any questions ping @alastair on Slack!
