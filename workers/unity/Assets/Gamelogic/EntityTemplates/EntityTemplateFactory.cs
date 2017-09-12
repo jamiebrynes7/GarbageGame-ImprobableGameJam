@@ -6,6 +6,7 @@ using Improbable.Player;
 using Improbable.Unity.Core.Acls;
 using Improbable.Unity.Entity;
 using Improbable.Worker;
+using Improbable.Environment;
 using UnityEngine;
 
 namespace Assets.Gamelogic.EntityTemplates
@@ -32,7 +33,7 @@ namespace Assets.Gamelogic.EntityTemplates
 				.AddMetadataComponent(SimulationSettings.PlayerPrefabName)
 				.SetPersistence(true)
 				.SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
-				.AddComponent(new ClientAuthorityCheck.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
+				.AddComponent(new ClientAuthorityCheck.Data(clientId), CommonRequirementSets.SpecificClientOnly(clientId))
 				.AddComponent(new ClientConnection.Data(SimulationSettings.TotalHeartbeatsBeforeTimeout), CommonRequirementSets.PhysicsOnly)
 				.AddComponent(new PlayerRotation.Data(yaw: 0), CommonRequirementSets.SpecificClientOnly(clientId))
 				.AddComponent(new PlayerMovement.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
@@ -48,7 +49,7 @@ namespace Assets.Gamelogic.EntityTemplates
 				.AddMetadataComponent(SimulationSettings.BinbagPrefabName)
 				.SetPersistence(true)
 				.SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
-				.AddComponent(new ClientAuthorityCheck.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
+				.AddComponent(new ClientAuthorityCheck.Data(clientId), CommonRequirementSets.SpecificClientOnly(clientId))
 				.AddComponent(new ClientConnection.Data(SimulationSettings.TotalHeartbeatsBeforeTimeout), CommonRequirementSets.PhysicsOnly)
 				.AddComponent(new PlayerRotation.Data(yaw: 0), CommonRequirementSets.SpecificClientOnly(clientId))
 				.AddComponent(new PlayerMovement.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
@@ -94,7 +95,7 @@ namespace Assets.Gamelogic.EntityTemplates
 				.AddMetadataComponent(SimulationSettings.BinmanPrefabName)
 				.SetPersistence(true)
 				.SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
-				.AddComponent(new ClientAuthorityCheck.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
+				.AddComponent(new ClientAuthorityCheck.Data(clientId), CommonRequirementSets.SpecificClientOnly(clientId))
 				.AddComponent(new ClientConnection.Data(SimulationSettings.TotalHeartbeatsBeforeTimeout), CommonRequirementSets.PhysicsOnly)
 				.AddComponent(new PlayerRotation.Data(yaw: 0), CommonRequirementSets.SpecificClientOnly(clientId))
 				.AddComponent(new PlayerMovement.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
@@ -139,5 +140,18 @@ namespace Assets.Gamelogic.EntityTemplates
 
 			return template;
 		}
+
+        public static Entity CreateRubbishTipTemplate(Vector3 position) {
+
+            var template = EntityBuilder.Begin()
+                .AddPositionComponent(position, CommonRequirementSets.PhysicsOnly)
+                .AddMetadataComponent(SimulationSettings.RubbishTipPrefabName)
+                .SetPersistence(true)
+                .SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
+				.AddComponent(new RubbishTipInfo.Data(0), CommonRequirementSets.PhysicsOnly)
+                .Build();
+
+            return template;
+        }
 	}
 }
