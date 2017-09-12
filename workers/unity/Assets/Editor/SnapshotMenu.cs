@@ -22,9 +22,15 @@ namespace Assets.Editor
 			snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreatePlayerCreatorTemplate());
 			//snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateCubeTemplate());
 
-			for (var i = 0; i < 40; i++)
+			for (var i = 0; i < 0; i++)
 			{
 				snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateBinbagNPCTemplate(Vector3.right * 3));
+			}
+
+			for (var i = 0; i < 40; i++)
+			{
+                uint rubbishIndex = (uint) Random.Range(0, RubbishChooser.RUBBISH_NUM);
+				snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateRubbishTemplate(Vector3.forward * 3 * i, rubbishIndex));
 			}
 
 			SaveSnapshot(snapshotEntities);

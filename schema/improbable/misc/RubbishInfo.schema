@@ -1,0 +1,6 @@
+package improbable.misc;
+
+component RubbishInfo {
+    id = 1303;
+    uint32 rubbish_index = 1;
+}

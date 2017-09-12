@@ -1,6 +1,7 @@
 ﻿using Assets.Gamelogic.Core;
 using Improbable;
 using Improbable.Core;
+using Improbable.Misc;
 using Improbable.Player;
 using Improbable.Unity.Core.Acls;
 using Improbable.Unity.Entity;
@@ -52,7 +53,7 @@ namespace Assets.Gamelogic.EntityTemplates
 				.AddComponent(new PlayerRotation.Data(yaw: 0), CommonRequirementSets.SpecificClientOnly(clientId))
 				.AddComponent(new PlayerMovement.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
 				.AddComponent(new BinbagVisuals.Data(Lean.NONE), CommonRequirementSets.SpecificClientOnly(clientId))
-				.AddComponent(new BinbagInfo.Data(10), CommonRequirementSets.PhysicsOnly)
+				.AddComponent(new BinbagInfo.Data(10, 0), CommonRequirementSets.PhysicsOnly)
 				.Build();
 
 			return template;
@@ -68,7 +69,7 @@ namespace Assets.Gamelogic.EntityTemplates
 				.AddComponent(new PlayerRotation.Data(yaw: 0), CommonRequirementSets.PhysicsOnly)
 				.AddComponent(new PlayerMovement.Data(), CommonRequirementSets.PhysicsOnly)
 				.AddComponent(new BinbagVisuals.Data(Lean.NONE), CommonRequirementSets.PhysicsOnly)
-				.AddComponent(new BinbagInfo.Data(10), CommonRequirementSets.PhysicsOnly)
+				.AddComponent(new BinbagInfo.Data(10, 0), CommonRequirementSets.PhysicsOnly)
 				.Build();
 
 			return template;
@@ -102,14 +103,26 @@ namespace Assets.Gamelogic.EntityTemplates
 			return template;
 		}
 
-		public static Entity CreateCubeTemplate()
-		{
-			var template = EntityBuilder.Begin()
-				.AddPositionComponent(new Vector3(0,1,5), CommonRequirementSets.PhysicsOnly)
-				.AddMetadataComponent(SimulationSettings.CubePrefabName)
-				.SetPersistence(true)
-				.SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
+        public static Entity CreateRubbishTemplate(Vector3 position, uint rubbishIndex){
+            var template = EntityBuilder.Begin()
+                .AddPositionComponent(position, CommonRequirementSets.PhysicsOnly)
+                .AddMetadataComponent("Rubbish")
+                .SetPersistence(true)
+                .SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
+                .AddComponent(new RubbishInfo.Data(rubbishIndex), CommonRequirementSets.PhysicsOnly)
 				.Build();
+
+			return template;
+        }
+
+        public static Entity CreateCubeTemplate()
+        {
+            var template = EntityBuilder.Begin()
+                .AddPositionComponent(new Vector3(0,1,5), CommonRequirementSets.PhysicsOnly)
+                .AddMetadataComponent(SimulationSettings.CubePrefabName)
+                .SetPersistence(true)
+                .SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
+                .Build();
 
 			return template;
 		}
