@@ -9,6 +9,7 @@ namespace Assets.Gamelogic.Core
         public static readonly string CubePrefabName = "Cube";
         public static readonly string BinbagPrefabName = "Binbag";
         public static readonly string BinmanPrefabName = "Binman";
+        public static readonly string RubbishTipPrefabName = "RubbishTip";
 
         public static readonly float ClientConnectionTimeoutSecs = 7;
 
@@ -54,5 +55,9 @@ namespace Assets.Gamelogic.Core
         public static float ThirdPersonCameraMaxPitch = 70;
         public static float ThirdPersonCameraMinPitch = 20;
         public static float ThirdPersonCameraDefaultPitch = 60;
+
+        // Tags for collisions
+        public static readonly string BinbagTag = "Binbag";
+        public static readonly string BinmanTag = "Binman";
     }
 }
