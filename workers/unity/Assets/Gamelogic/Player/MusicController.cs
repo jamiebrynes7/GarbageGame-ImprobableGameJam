@@ -12,12 +12,12 @@ public class MusicController : MonoBehaviour {
 	public AudioClip music;
 	private AudioSource audioSource;
 
-	[Require] private ClientAuthorityCheck.Writer crcReader;
+	[Require] private ClientAuthorityCheck.Writer crcWriter;
 
 	private void OnEnable() 
 	{
-		Debug.Log(crcReader == null);	
-		if (crcReader != null) {
+		Debug.Log(crcWriter == null);	
+		if (crcWriter != null) {
 			LoadAudio();
 		}
 	}
