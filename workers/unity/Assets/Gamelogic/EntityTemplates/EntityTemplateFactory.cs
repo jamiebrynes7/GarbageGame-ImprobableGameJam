@@ -98,6 +98,7 @@ namespace Assets.Gamelogic.EntityTemplates
 				.AddComponent(new ClientConnection.Data(SimulationSettings.TotalHeartbeatsBeforeTimeout), CommonRequirementSets.PhysicsOnly)
 				.AddComponent(new PlayerRotation.Data(yaw: 0), CommonRequirementSets.SpecificClientOnly(clientId))
 				.AddComponent(new PlayerMovement.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
+                .AddComponent(new BinmanInfo.Data(false), CommonRequirementSets.PhysicsOnly)
 				.Build();
 
 			return template;
@@ -114,6 +115,18 @@ namespace Assets.Gamelogic.EntityTemplates
 
 			return template;
         }
+
+		public static Entity CreateBinJuiceTemplate(Vector3 position)
+		{
+			var template = EntityBuilder.Begin()
+				.AddPositionComponent(position, CommonRequirementSets.PhysicsOnly)
+				.AddMetadataComponent("BinJuice")
+				.SetPersistence(true)
+				.SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
+				.Build();
+
+			return template;
+		}
 
         public static Entity CreateCubeTemplate()
         {
