@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class RubbishChooser : MonoBehaviour {
 
-    public static int RUBBISH_NUM = 2;
+    public static int RUBBISH_NUM = 3;
 
     [Require]
     private RubbishInfo.Reader rubbishInfoReader;
