@@ -1,0 +1,7 @@
+package improbable.environment;
+
+component RubbishTipInfo {
+    id = 1400;
+    uint32 number_bin_bags = 1;
+
+}
