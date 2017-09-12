@@ -9,50 +9,50 @@ using UnityEngine;
 
 namespace Assets.Gamelogic.EntityTemplates
 {
-    public class EntityTemplateFactory : MonoBehaviour
+	public class EntityTemplateFactory : MonoBehaviour
 	{
-        public static Entity CreatePlayerCreatorTemplate()
-        {
-            var template = EntityBuilder.Begin()
-                .AddPositionComponent(Vector3.zero, CommonRequirementSets.PhysicsOnly)
-                .AddMetadataComponent(SimulationSettings.PlayerCreatorPrefabName)
-                .SetPersistence(true)
-                .SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
-                .AddComponent(new PlayerCreation.Data(), CommonRequirementSets.PhysicsOnly)
-                .Build();
+		public static Entity CreatePlayerCreatorTemplate()
+		{
+			var template = EntityBuilder.Begin()
+				.AddPositionComponent(Vector3.zero, CommonRequirementSets.PhysicsOnly)
+				.AddMetadataComponent(SimulationSettings.PlayerCreatorPrefabName)
+				.SetPersistence(true)
+				.SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
+				.AddComponent(new PlayerCreation.Data(), CommonRequirementSets.PhysicsOnly)
+				.Build();
 
-            return template;
-        }
+			return template;
+		}
 
-        public static Entity CreatePlayerTemplate(string clientId)
-        {
-            var template = EntityBuilder.Begin()
-                .AddPositionComponent(Vector3.zero, CommonRequirementSets.SpecificClientOnly(clientId))
-                .AddMetadataComponent(SimulationSettings.PlayerPrefabName)
-                .SetPersistence(true)
-                .SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
-                .AddComponent(new ClientAuthorityCheck.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
-                .AddComponent(new ClientConnection.Data(SimulationSettings.TotalHeartbeatsBeforeTimeout), CommonRequirementSets.PhysicsOnly)
-                .AddComponent(new PlayerRotation.Data(yaw: 0), CommonRequirementSets.SpecificClientOnly(clientId))
-                .AddComponent(new PlayerMovement.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
-                .Build();
+		public static Entity CreatePlayerTemplate(string clientId)
+		{
+			var template = EntityBuilder.Begin()
+				.AddPositionComponent(Vector3.zero, CommonRequirementSets.SpecificClientOnly(clientId))
+				.AddMetadataComponent(SimulationSettings.PlayerPrefabName)
+				.SetPersistence(true)
+				.SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
+				.AddComponent(new ClientAuthorityCheck.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
+				.AddComponent(new ClientConnection.Data(SimulationSettings.TotalHeartbeatsBeforeTimeout), CommonRequirementSets.PhysicsOnly)
+				.AddComponent(new PlayerRotation.Data(yaw: 0), CommonRequirementSets.SpecificClientOnly(clientId))
+				.AddComponent(new PlayerMovement.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
+				.Build();
 
-            return template;
-        }
+			return template;
+		}
 
 		public static Entity CreateBinbagTemplate(string clientId)
 		{
 			var template = EntityBuilder.Begin()
 				.AddPositionComponent(Vector3.zero, CommonRequirementSets.SpecificClientOnly(clientId))
-                .AddMetadataComponent(SimulationSettings.BinbagPrefabName)
+				.AddMetadataComponent(SimulationSettings.BinbagPrefabName)
 				.SetPersistence(true)
 				.SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
 				.AddComponent(new ClientAuthorityCheck.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
 				.AddComponent(new ClientConnection.Data(SimulationSettings.TotalHeartbeatsBeforeTimeout), CommonRequirementSets.PhysicsOnly)
-                .AddComponent(new PlayerRotation.Data(yaw: 0), CommonRequirementSets.SpecificClientOnly(clientId))
+				.AddComponent(new PlayerRotation.Data(yaw: 0), CommonRequirementSets.SpecificClientOnly(clientId))
 				.AddComponent(new PlayerMovement.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
-                .AddComponent(new BinbagVisuals.Data(Lean.NONE), CommonRequirementSets.SpecificClientOnly(clientId))
-                .AddComponent(new BinbagInfo.Data(10), CommonRequirementSets.PhysicsOnly)
+				.AddComponent(new BinbagVisuals.Data(Lean.NONE), CommonRequirementSets.SpecificClientOnly(clientId))
+				.AddComponent(new BinbagInfo.Data(10), CommonRequirementSets.PhysicsOnly)
 				.Build();
 
 			return template;
@@ -61,7 +61,7 @@ namespace Assets.Gamelogic.EntityTemplates
 		public static Entity CreateBinbagNPCTemplate(Vector3 position)
 		{
 			var template = EntityBuilder.Begin()
-                                        .AddPositionComponent(Vector3.zero, CommonRequirementSets.PhysicsOnly)
+				.AddPositionComponent(Vector3.zero, CommonRequirementSets.PhysicsOnly)
 				.AddMetadataComponent(SimulationSettings.BinbagPrefabName)
 				.SetPersistence(true)
 				.SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
@@ -77,7 +77,7 @@ namespace Assets.Gamelogic.EntityTemplates
 		public static Entity CreateStoneTemplate(Vector3 position)
 		{
 			var template = EntityBuilder.Begin()
-                .AddPositionComponent(position, CommonRequirementSets.PhysicsOnly)
+				.AddPositionComponent(position, CommonRequirementSets.PhysicsOnly)
 				.AddMetadataComponent("Stone")
 				.SetPersistence(true)
 				.SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
@@ -86,32 +86,32 @@ namespace Assets.Gamelogic.EntityTemplates
 			return template;
 		}
 
-        public static Entity CreateBinmanTemplate(string clientId)
-        {
-            var template = EntityBuilder.Begin()
-                .AddPositionComponent(Vector3.zero, CommonRequirementSets.SpecificClientOnly(clientId))
-                .AddMetadataComponent(SimulationSettings.BinmanPrefabName)
-                .SetPersistence(true)
-                .SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
-                .AddComponent(new ClientAuthorityCheck.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
-                .AddComponent(new ClientConnection.Data(SimulationSettings.TotalHeartbeatsBeforeTimeout), CommonRequirementSets.PhysicsOnly)
-                .AddComponent(new PlayerRotation.Data(yaw: 0), CommonRequirementSets.SpecificClientOnly(clientId))
-                .AddComponent(new PlayerMovement.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
-                .Build();
+		public static Entity CreateBinmanTemplate(string clientId)
+		{
+			var template = EntityBuilder.Begin()
+				.AddPositionComponent(Vector3.zero, CommonRequirementSets.SpecificClientOnly(clientId))
+				.AddMetadataComponent(SimulationSettings.BinmanPrefabName)
+				.SetPersistence(true)
+				.SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
+				.AddComponent(new ClientAuthorityCheck.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
+				.AddComponent(new ClientConnection.Data(SimulationSettings.TotalHeartbeatsBeforeTimeout), CommonRequirementSets.PhysicsOnly)
+				.AddComponent(new PlayerRotation.Data(yaw: 0), CommonRequirementSets.SpecificClientOnly(clientId))
+				.AddComponent(new PlayerMovement.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
+				.Build();
 
-            return template;
-        }
+			return template;
+		}
 
-        public static Entity CreateCubeTemplate()
-        {
-            var template = EntityBuilder.Begin()
-                .AddPositionComponent(new Vector3(0,1,5), CommonRequirementSets.PhysicsOnly)
-                .AddMetadataComponent(SimulationSettings.CubePrefabName)
-                .SetPersistence(true)
-                .SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
-                .Build();
+		public static Entity CreateCubeTemplate()
+		{
+			var template = EntityBuilder.Begin()
+				.AddPositionComponent(new Vector3(0,1,5), CommonRequirementSets.PhysicsOnly)
+				.AddMetadataComponent(SimulationSettings.CubePrefabName)
+				.SetPersistence(true)
+				.SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
+				.Build();
 
-            return template;
-        }
-    }
+			return template;
+		}
+	}
 }
