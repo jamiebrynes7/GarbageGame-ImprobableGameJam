@@ -22,8 +22,11 @@ namespace Assets.Gamelogic.Core
         // Called when the Play button is pressed in Unity.
         public void Start()
         {
-            SceneManager.LoadScene(BuildSettings.SplashScreenScene, LoadSceneMode.Additive);
             SpatialOS.ApplyConfiguration(Configuration);
+            if (SpatialOS.Configuration.WorkerPlatform == WorkerPlatform.UnityClient)
+            {
+                SceneManager.LoadScene(BuildSettings.SplashScreenScene, LoadSceneMode.Additive);
+            }
 
             Time.fixedDeltaTime = 1.0f / SimulationSettings.FixedFramerate;
 
@@ -43,7 +46,7 @@ namespace Assets.Gamelogic.Core
         }
 
         // Connect to game server
-        public void ConnectToClient() 
+        public void ConnectToSpatialOS() 
         {
             SpatialOS.Connect(gameObject);
         }
