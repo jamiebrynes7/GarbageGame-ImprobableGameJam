@@ -13,4 +13,8 @@ public class BinbagClientNPCInfo : MonoBehaviour {
         return authorityCheck == null;
     }
 
+	public string GetClientId() {
+		return authorityCheck.Data.clientid;
+	}
+
 }

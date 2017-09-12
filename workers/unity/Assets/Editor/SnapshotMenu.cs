@@ -22,7 +22,7 @@ namespace Assets.Editor
 			snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreatePlayerCreatorTemplate());
 			//snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateCubeTemplate());
 
-			for (var i = 0; i < 0; i++)
+			for (var i = 0; i < 40; i++)
 			{
 				snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateBinbagNPCTemplate(Vector3.right * 3));
 			}
