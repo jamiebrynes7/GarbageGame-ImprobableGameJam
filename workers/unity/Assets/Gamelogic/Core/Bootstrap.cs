@@ -22,7 +22,6 @@ namespace Assets.Gamelogic.Core
         // Called when the Play button is pressed in Unity.
         public void Start()
         {
-            SceneManager.LoadScene(BuildSettings.SplashScreenScene, LoadSceneMode.Additive);
             SpatialOS.ApplyConfiguration(Configuration);
 
             Time.fixedDeltaTime = 1.0f / SimulationSettings.FixedFramerate;
@@ -37,6 +36,7 @@ namespace Assets.Gamelogic.Core
                     break;
                 case WorkerPlatform.UnityClient:
                     Application.targetFrameRate = SimulationSettings.TargetClientFramerate;
+					SceneManager.LoadScene(BuildSettings.SplashScreenScene, LoadSceneMode.Additive);
                     SpatialOS.OnConnected += () => CreatePlayer(this.isBinBag);
                     break;
             }

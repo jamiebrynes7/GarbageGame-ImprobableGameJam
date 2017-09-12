@@ -52,7 +52,7 @@ namespace Assets.Gamelogic.EntityTemplates
                 .AddComponent(new PlayerRotation.Data(yaw: 0), CommonRequirementSets.SpecificClientOnly(clientId))
 				.AddComponent(new PlayerMovement.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
                 .AddComponent(new BinbagVisuals.Data(Lean.NONE), CommonRequirementSets.SpecificClientOnly(clientId))
-                .AddComponent(new BinbagInfo.Data(10), CommonRequirementSets.PhysicsOnly)
+				.AddComponent(new BinbagInfo.Data(10), CommonRequirementSets.PhysicsOnly)
 				.Build();
 
 			return template;

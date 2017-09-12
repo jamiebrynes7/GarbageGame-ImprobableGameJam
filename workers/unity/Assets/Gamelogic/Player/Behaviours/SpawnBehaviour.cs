@@ -1,5 +1,6 @@
 ﻿using Improbable.Player;
 using Improbable.Unity;
+using Improbable.Unity.Core;
 using Improbable.Unity.Visualizer;
 using UnityEngine;
 using UnityEngine.AI;
@@ -10,38 +11,36 @@ namespace Assets.Gamelogic.Player.Behaviours
 	[WorkerType(WorkerPlatform.UnityClient)]
 	public class SpawnBehaviour : MonoBehaviour
 	{
-		// Inject access to the entity's Health component
-		[Require] private BinbagInfo.Reader binbagInfoReader;
-
-		private bool alreadySunk = false;
+		[Require] private BinbagInfo.Reader BinbagInfoReader;
 
 		private void OnEnable()
 		{
-			alreadySunk = false;
-			binbagInfoReader.HealthUpdated.Add(OnCurrentHealthUpdated);
+			BinbagInfoReader.HealthUpdated.Add(OnCurrentHealthUpdated);
 		}
 
 		private void OnDisable()
 		{
-			binbagInfoReader.HealthUpdated.Remove(OnCurrentHealthUpdated);
+			BinbagInfoReader.HealthUpdated.Remove(OnCurrentHealthUpdated);
 		}
+
 
 		// Callback for whenever the CurrentHealth property of the Health component is updated
 		private void OnCurrentHealthUpdated(uint currentHealth)
 		{
-			if (currentHealth <= 0)
-			{
+			//if (currentHealth <= 0)
+			//{
 				Respawn ();
-			}
+			//}
 		}
 
 		private void Respawn()
 		{
-			Vector3 position = new Vector3(Random.Range(-200,200), 0, Random.Range(-200, 200));
+			//BinbagInfoWriter.Send (new BinbagInfo.Update().SetHealth(10));
+			Vector3 position = new Vector3(Random.Range(-100, 100), 2, Random.Range(-100, 100));
 			NavMeshHit hit;
-			NavMesh.SamplePosition(position, out hit, 10, 1);
+			NavMesh.SamplePosition(position, out hit, 10, NavMesh.AllAreas);
 			position = hit.position;
-			this.transform.position = position;
+			this.gameObject.transform.position = position;
 		}
 	}
 }
