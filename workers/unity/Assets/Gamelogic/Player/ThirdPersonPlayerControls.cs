@@ -7,6 +7,8 @@ using Improbable.Unity.Common.Core.Math;
 using Improbable.Unity.Visualizer;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
+using Improbable.Entity.Component;
+
 
 namespace Assets.Gamelogic.Player
 {
@@ -48,7 +50,17 @@ namespace Assets.Gamelogic.Player
             playerRigidbody.MoveRotation(Quaternion.Euler(0f, PlayerRotationWriter.Data.yaw, 0f));
 
             isDrunk = false;
+			PlayerMovementWriter.CommandReceiver.OnRespawn.RegisterResponse (OnRespawn);
         }
+
+		private MovementResponse OnRespawn(SpawnPosition position, ICommandCallerInfo callerInfo) {
+			this.transform.position = position.position.ToUnityVector();
+			return new MovementResponse (position.position);
+		}
+
+		private void OnDisable() {
+			PlayerMovementWriter.CommandReceiver.OnRespawn.DeregisterResponse ();
+		}
 
         private void Update()
         {

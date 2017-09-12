@@ -7,6 +7,9 @@ using Improbable.Unity;
 using Improbable.Unity.Core;
 using Improbable;
 using Improbable.Core;
+using UnityEngine.AI;
+using Improbable.Unity.Common.Core.Math;
+
 
 
 namespace Assets.Gamelogic.Player.Behaviours
@@ -31,10 +34,10 @@ namespace Assets.Gamelogic.Player.Behaviours
 		// Callback for whenever the CurrentHealth property of the Health component is updated
 		private void OnCurrentHealthUpdated(uint currentHealth)
 		{
-			Debug.LogWarning (currentHealth);
-
 			if (currentHealth <= 0)
 			{
+				Respawn ();
+				/*
 				var id = gameObject.EntityId();
 				var clientInfo = GetComponent<BinbagClientNPCInfo>();
 				if (clientInfo != null && clientInfo.IsNPCBinBag ()) {
@@ -51,6 +54,7 @@ namespace Assets.Gamelogic.Player.Behaviours
 						.OnFailure(errorDetails => Debug.LogWarning("Failed to delete entity with error: " + errorDetails.ErrorMessage));
 
 				}
+				*/
 			}
 		}
 
@@ -58,6 +62,23 @@ namespace Assets.Gamelogic.Player.Behaviours
 			SpatialOS.Commands.DeleteEntity(writer, id)
 				.OnSuccess(entityId => Debug.LogWarning("Deleted entity: " + entityId))
 				.OnFailure(errorDetails => Debug.LogWarning("Failed to delete entity with error: " + errorDetails.ErrorMessage));
+		}
+
+		private void Respawn() {
+			Vector3 position = new Vector3(Random.Range(-100, 100), 2, Random.Range(-100, 100));
+			NavMeshHit hit;
+			NavMesh.SamplePosition(position, out hit, 10, NavMesh.AllAreas);
+			position = hit.position;
+			this.gameObject.transform.position = position;
+			Debug.LogWarning (position);
+			var clientInfo = GetComponent<BinbagClientNPCInfo>();
+			if (clientInfo == null || !clientInfo.IsNPCBinBag ()) {
+				SpatialOS.Commands.SendCommand (BinbagInfoWriter, PlayerMovement.Commands.Respawn.Descriptor, new SpawnPosition (position.ToSpatialVector3d ()), this.gameObject.EntityId ())
+					.OnSuccess (entityId => BinbagInfoWriter.Send (new BinbagInfo.Update ().SetHealth (10).SetSize (0)))
+					.OnFailure (errorDetails => Debug.LogWarning ("Failed to respawn with error: " + errorDetails.ErrorMessage));
+			} else {
+				BinbagInfoWriter.Send (new BinbagInfo.Update ().SetHealth (10).SetSize (0));
+			}
 		}
 	}
 }

@@ -98,7 +98,11 @@ namespace Assets.Gamelogic.Player
             {
                 var interpolationTarget = positionUpdates.Peek();
                 var lerpRate = (currentInterpolationTime - positionInterpolationRoot.timestamp) / (interpolationTarget.timestamp - positionInterpolationRoot.timestamp);
-                playerRigidbody.MovePosition(Vector3.Lerp(positionInterpolationRoot.data, interpolationTarget.data, lerpRate));
+
+				if (Vector3.Distance(positionInterpolationRoot.data, interpolationTarget.data) < 5)
+	                playerRigidbody.MovePosition(Vector3.Lerp(positionInterpolationRoot.data, interpolationTarget.data, lerpRate));
+				else
+					playerRigidbody.MovePosition(interpolationTarget.data);
             }
         }
         private void InterpolateRotationData(float currentTime)
