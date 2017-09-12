@@ -44,7 +44,7 @@ namespace Assets.Gamelogic.EntityTemplates
 		public static Entity CreateBinbagTemplate(string clientId)
 		{
 			var template = EntityBuilder.Begin()
-				.AddPositionComponent(Vector3.zero, CommonRequirementSets.SpecificClientOnly(clientId))
+				.AddPositionComponent(new Vector3(0f, 0.333f, 0f), CommonRequirementSets.SpecificClientOnly(clientId))
 				.AddMetadataComponent(SimulationSettings.BinbagPrefabName)
 				.SetPersistence(true)
 				.SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
