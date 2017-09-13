@@ -1,0 +1,11 @@
+package improbable.environment;
+
+import "improbable/standard_library.schema";
+
+type SpawnData {
+  Coordinates initial_position = 1;
+}
+component StoneInfo {
+    id = 1306;
+    event SpawnData spawn;
+}
