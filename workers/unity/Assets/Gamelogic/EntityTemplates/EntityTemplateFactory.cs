@@ -45,7 +45,7 @@ namespace Assets.Gamelogic.EntityTemplates
 		public static Entity CreateBinbagTemplate(string clientId)
 		{
 			var template = EntityBuilder.Begin()
-				.AddPositionComponent(Vector3.zero, CommonRequirementSets.SpecificClientOnly(clientId))
+				.AddPositionComponent(new Vector3(0f, 0.333f, 0f), CommonRequirementSets.SpecificClientOnly(clientId))
 				.AddMetadataComponent(SimulationSettings.BinbagPrefabName)
 				.SetPersistence(true)
 				.SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
@@ -99,6 +99,7 @@ namespace Assets.Gamelogic.EntityTemplates
 				.AddComponent(new ClientConnection.Data(SimulationSettings.TotalHeartbeatsBeforeTimeout), CommonRequirementSets.PhysicsOnly)
 				.AddComponent(new PlayerRotation.Data(yaw: 0), CommonRequirementSets.SpecificClientOnly(clientId))
 				.AddComponent(new PlayerMovement.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
+                .AddComponent(new BinmanInfo.Data(false), CommonRequirementSets.PhysicsOnly)
 				.Build();
 
 			return template;
@@ -115,6 +116,18 @@ namespace Assets.Gamelogic.EntityTemplates
 
 			return template;
         }
+
+		public static Entity CreateBinJuiceTemplate(Vector3 position)
+		{
+			var template = EntityBuilder.Begin()
+				.AddPositionComponent(position, CommonRequirementSets.PhysicsOnly)
+				.AddMetadataComponent("BinJuice")
+				.SetPersistence(true)
+				.SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
+				.Build();
+
+			return template;
+		}
 
         public static Entity CreateCubeTemplate()
         {
@@ -140,5 +153,18 @@ namespace Assets.Gamelogic.EntityTemplates
 
             return template;
         }
+
+		public static Entity CreateScoreTrackerTemplate()
+		{
+			var template = EntityBuilder.Begin()
+				.AddPositionComponent(new Vector3(0,0,0), CommonRequirementSets.PhysicsOnly)
+				.AddMetadataComponent(SimulationSettings.ScoreTrackerPrefabName)
+				.SetPersistence(true)
+				.SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
+				.AddComponent(new Score.Data(0, 0), CommonRequirementSets.PhysicsOnly)
+				.Build();
+
+			return template;
+		}
 	}
 }

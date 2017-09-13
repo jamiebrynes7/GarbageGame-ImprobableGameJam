@@ -7,6 +7,8 @@ using Improbable.Unity.Common.Core.Math;
 using Improbable.Unity.Visualizer;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
+using Improbable.Entity.Component;
+
 
 namespace Assets.Gamelogic.Player
 {
@@ -29,6 +31,10 @@ namespace Assets.Gamelogic.Player
         [SerializeField] private Rigidbody playerRigidbody;
         [SerializeField] private Animator playerAnimator;
 
+        private bool isDrunk = false;
+
+        private float drunkCameraOffsetAngle = 0f;
+
         private void Awake()
         {
             cameraDistance = SimulationSettings.ThirdPersonCameraDefaultDistance;
@@ -42,7 +48,19 @@ namespace Assets.Gamelogic.Player
 
             playerRigidbody.MovePosition(PositionWriter.Data.coords.ToUnityVector());
             playerRigidbody.MoveRotation(Quaternion.Euler(0f, PlayerRotationWriter.Data.yaw, 0f));
+
+            isDrunk = false;
+			PlayerMovementWriter.CommandReceiver.OnRespawn.RegisterResponse (OnRespawn);
         }
+
+		private MovementResponse OnRespawn(SpawnPosition position, ICommandCallerInfo callerInfo) {
+			this.transform.position = position.position.ToUnityVector();
+			return new MovementResponse (position.position);
+		}
+
+		private void OnDisable() {
+			PlayerMovementWriter.CommandReceiver.OnRespawn.DeregisterResponse ();
+		}
 
         private void Update()
         {
@@ -52,6 +70,9 @@ namespace Assets.Gamelogic.Player
 
         private void FixedUpdate()
         {
+            if(isDrunk){
+                drunkCameraOffsetAngle += Time.deltaTime * 180f;
+            }
             UpdatePlayerControls();
             MovePlayer();
             UpdateAnimation();
@@ -61,6 +82,14 @@ namespace Assets.Gamelogic.Player
         {
             MoveCamera();
             UpdateCameraRotation();
+        }
+
+        public void SetIsDrunk(bool drunk){
+            isDrunk = drunk;
+            playerAnimator.SetBool("Crouch", drunk);
+            if(isDrunk){
+                drunkCameraOffsetAngle = 0;
+            }
         }
 
         private void OnApplicationFocus(bool hasFocus)
@@ -81,6 +110,9 @@ namespace Assets.Gamelogic.Player
         protected virtual void UpdateDesiredMovementDirection()
         {
             Vector3 inputDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            if(isDrunk){
+                inputDirection *= -1;
+            }
             Vector3 movementDirection = (camera.transform.rotation * inputDirection).FlattenVector().normalized;
             targetVelocity = movementDirection * SimulationSettings.PlayerMovementSpeed;
         }
@@ -99,6 +131,10 @@ namespace Assets.Gamelogic.Player
         private void MoveCamera()
         {
             camera.position = transform.position + Quaternion.Euler(new Vector3(cameraPitch, cameraYaw, 0)) * Vector3.back * cameraDistance;
+            if(isDrunk){
+                var offset = new Vector3(Mathf.Cos(drunkCameraOffsetAngle), Mathf.Sin(drunkCameraOffsetAngle), 0f);
+                camera.transform.Translate(offset);
+            }
         }
 
         private void UpdateCameraRotation()
