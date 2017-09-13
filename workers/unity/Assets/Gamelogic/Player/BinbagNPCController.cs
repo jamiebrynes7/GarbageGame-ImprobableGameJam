@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.Gamelogic.Utils;
 using Improbable;
 using Improbable.Player;
 using Improbable.Unity;
@@ -61,11 +62,7 @@ public class BinbagNPCController : MonoBehaviour {
 	}
 
     private void UpdateTarget(){
-        Vector3 randomPoint = (Random.insideUnitSphere * 50f);
-		NavMeshHit hit;
-        NavMesh.SamplePosition(randomPoint, out hit, 30f, 1);
-        randomPoint = hit.position;
-
+        Vector3 randomPoint = PositionUtils.GetRandomPosition();
         navMeshAgent.destination = randomPoint;
     }
 

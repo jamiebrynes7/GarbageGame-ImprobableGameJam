@@ -16,17 +16,35 @@ using Assets.Gamelogic.Utils;
 [WorkerType(WorkerPlatform.UnityWorker)]
 public class RubbishSpawner : MonoBehaviour
 {
+    private static float INTERVAL = 10f;
+    private static int MAX_RUBBISH = 500;
+
 	[Require] Score.Writer ScoreWriter;
 	private float time = 0;
 
+    private float nextCheckTime = -1;
 
-	private void Update() {
-		time += Time.deltaTime;
-		if (time > 3) {
-			Vector3 position = PositionUtils.GetRandomPosition ();
-			var entityTemplate = Assets.Gamelogic.EntityTemplates.EntityTemplateFactory.CreateRubbishTemplate (position, (uint) Random.Range(0, 3));
-			SpatialOS.Commands.CreateEntity (ScoreWriter, entityTemplate)
-				.OnFailure (errorDetails => Debug.LogWarning ("Failed to drop stone with error: " + errorDetails.ErrorMessage));
+    private void OnEnable()
+    {
+        nextCheckTime = Time.time + INTERVAL;
+    }
+
+    private void Update() {
+        if (Time.time > nextCheckTime) {
+            nextCheckTime = Time.time + INTERVAL;
+
+            int numRubbish = GameObject.FindGameObjectsWithTag("Rubbish").Length;
+            if (numRubbish < MAX_RUBBISH)
+            {
+                for (var i = 0; i < 50; i++)
+                {
+                    Vector3 position = PositionUtils.GetRandomPosition();
+                    position.y = 0f;
+                    var entityTemplate = Assets.Gamelogic.EntityTemplates.EntityTemplateFactory.CreateRubbishTemplate(position, (uint)Random.Range(0, 3));
+                    SpatialOS.Commands.CreateEntity(ScoreWriter, entityTemplate)
+                        .OnFailure(errorDetails => Debug.LogWarning("Failed to drop stone with error: " + errorDetails.ErrorMessage));
+                }
+            }
 		}
 	}
 }
