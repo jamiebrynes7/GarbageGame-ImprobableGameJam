@@ -10,6 +10,7 @@ namespace Assets.Gamelogic.Core
         public static readonly string BinbagPrefabName = "Binbag";
         public static readonly string BinmanPrefabName = "Binman";
         public static readonly string RubbishTipPrefabName = "RubbishTip";
+		public static readonly string ScoreTrackerPrefabName = "ScoreTracker";
 
         public static readonly float ClientConnectionTimeoutSecs = 7;
 

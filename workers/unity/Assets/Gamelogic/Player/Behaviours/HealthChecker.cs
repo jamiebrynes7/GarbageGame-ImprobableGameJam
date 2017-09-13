@@ -37,24 +37,6 @@ namespace Assets.Gamelogic.Player.Behaviours
 			if (currentHealth <= 0)
 			{
 				Respawn ();
-				/*
-				var id = gameObject.EntityId();
-				var clientInfo = GetComponent<BinbagClientNPCInfo>();
-				if (clientInfo != null && clientInfo.IsNPCBinBag ()) {
-					var entityTemplate = Assets.Gamelogic.EntityTemplates.EntityTemplateFactory.CreateBinbagNPCTemplate (new Vector3(Random.Range(-100, 100), 1, Random.Range(-100, 100)));
-					SpatialOS.Commands.CreateEntity(BinbagInfoWriter, entityTemplate)
-						.OnSuccess(result => OnSuccessfulPlayerCreation(id, BinbagInfoWriter))
-						.OnFailure(errorDetails => Debug.LogWarning("Failed to delete entity with error: " + errorDetails.ErrorMessage));
-				} else {
-					
-					//Bootstrap.CreatePlayer (true);
-					var entityTemplate = Assets.Gamelogic.EntityTemplates.EntityTemplateFactory.CreateBinbagTemplate (clientInfo.GetClientId ());
-					SpatialOS.Commands.CreateEntity(BinbagInfoWriter, entityTemplate)
-						.OnSuccess(result => OnSuccessfulPlayerCreation(id, BinbagInfoWriter))
-						.OnFailure(errorDetails => Debug.LogWarning("Failed to delete entity with error: " + errorDetails.ErrorMessage));
-
-				}
-				*/
 			}
 		}
 

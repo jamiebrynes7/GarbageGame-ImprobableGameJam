@@ -153,5 +153,18 @@ namespace Assets.Gamelogic.EntityTemplates
 
             return template;
         }
+
+		public static Entity CreateScoreTrackerTemplate()
+		{
+			var template = EntityBuilder.Begin()
+				.AddPositionComponent(new Vector3(0,0,0), CommonRequirementSets.PhysicsOnly)
+				.AddMetadataComponent(SimulationSettings.ScoreTrackerPrefabName)
+				.SetPersistence(true)
+				.SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
+				.AddComponent(new Score.Data(0, 0), CommonRequirementSets.PhysicsOnly)
+				.Build();
+
+			return template;
+		}
 	}
 }

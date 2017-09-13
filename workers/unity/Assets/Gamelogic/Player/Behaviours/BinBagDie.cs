@@ -7,6 +7,7 @@ using Improbable.Unity;
 using Improbable.Unity.Core;
 using Improbable;
 using Improbable.Core;
+using Improbable.Environment;
 
 
 [WorkerType(WorkerPlatform.UnityWorker)]
@@ -36,6 +37,13 @@ public class BinBagDie : MonoBehaviour
 
 			BinbagInfoWriter.Send (new BinbagInfo.Update().SetHealth(newHealth));
 			timestamp = Time.time;
+			GameObject scoreTracker = GameObject.FindGameObjectWithTag ("ScoreTracker");
+			Debug.LogWarning (scoreTracker);
+			if (scoreTracker != null) {
+				SpatialOS.Commands.SendCommand (BinbagInfoWriter, Score.Commands.AwardBinmanPoints.Descriptor, new AwardPoints (BinbagInfoWriter.Data.size + 1), scoreTracker.EntityId ())
+					.OnSuccess (result => Debug.LogWarning ("Awarded points to Binmen"))
+					.OnFailure (errorDetails => Debug.LogWarning ("Failed to award points with error: " + errorDetails.ErrorMessage));
+			}
 		}
 			
 	}

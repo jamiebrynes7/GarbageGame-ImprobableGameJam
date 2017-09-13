@@ -1,0 +1,18 @@
+package improbable.environment;
+
+type AwardPoints {
+	uint32 amount = 1;
+}
+
+type AwardResponse {
+	uint32 amount = 1;
+}
+
+component Score {
+    id = 1305;
+    uint32 binbag_score = 1;
+    uint32 binman_score = 2;
+
+    command AwardResponse award_binbag_points(AwardPoints);
+    command AwardResponse award_binman_points(AwardPoints);
+}
