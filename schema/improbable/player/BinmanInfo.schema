@@ -1,0 +1,6 @@
+package improbable.player;
+
+component BinmanInfo {
+    id = 1312;
+    bool is_drunk = 1;
+}

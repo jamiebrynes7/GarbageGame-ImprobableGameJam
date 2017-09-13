@@ -45,7 +45,7 @@ public class SplashScreenController : MonoBehaviour {
 
 	private void AttemptConnection() 
 	{
-		FindObjectOfType<Bootstrap>().ConnectToClient();
+        FindObjectOfType<Bootstrap>().ConnectToSpatialOS();
 		StartCoroutine(TimerUtils.WaitAndPerform(SimulationSettings.ClientConnectionTimeoutSecs, ConnectionTimeout));
 	}
 

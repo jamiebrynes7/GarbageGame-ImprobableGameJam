@@ -7,7 +7,16 @@ type MovementUpdate {
   float timestamp = 2;
 }
 
+type MovementResponse {
+	Vector3d position = 1;
+}
+
+type SpawnPosition {
+	Vector3d position = 1;
+}
+
 component PlayerMovement {
     id = 1200;
     event MovementUpdate movement_update;
+    command MovementResponse respawn(SpawnPosition);
 }

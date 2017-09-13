@@ -1,0 +1,11 @@
+package improbable.environment;
+
+type IncrementTipRequest {}
+type IncrementTipResponse {}
+
+component RubbishTipInfo {
+    id = 1400;
+    uint32 number_bin_bags = 1;
+
+    command IncrementTipResponse increment_tip(IncrementTipRequest);
+}

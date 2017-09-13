@@ -7,6 +7,8 @@ using Improbable.Unity.Common.Core.Math;
 using Improbable.Unity.Visualizer;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
+using Improbable.Entity.Component;
+using Improbable.Unity.Common.Core.Math;
 
 namespace Assets.Gamelogic.Player
 {
@@ -50,6 +52,5 @@ namespace Assets.Gamelogic.Player
                 binbagVisualsWriter.Send(new BinbagVisuals.Update().SetBagLean(leanVal));
             }
         }
-
 	}
 }
