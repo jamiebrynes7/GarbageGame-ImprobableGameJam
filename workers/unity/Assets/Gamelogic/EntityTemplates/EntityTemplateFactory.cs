@@ -100,6 +100,7 @@ namespace Assets.Gamelogic.EntityTemplates
 				.AddComponent(new PlayerRotation.Data(yaw: 0), CommonRequirementSets.SpecificClientOnly(clientId))
 				.AddComponent(new PlayerMovement.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
                 .AddComponent(new BinmanInfo.Data(false), CommonRequirementSets.PhysicsOnly)
+				.AddComponent(new StoneInfo.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
 				.Build();
 
 			return template;
