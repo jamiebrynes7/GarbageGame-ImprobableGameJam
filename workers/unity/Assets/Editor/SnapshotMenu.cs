@@ -23,7 +23,7 @@ namespace Assets.Editor
 			//snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateCubeTemplate());
 			snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateWorldTrackerTemplate());
 
-			for (var i = 0; i < 40; i++)
+			for (var i = 0; i < 0; i++)
 			{
 				snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateBinbagNPCTemplate(Vector3.right * 3));
 			}
@@ -34,9 +34,14 @@ namespace Assets.Editor
 				snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateRubbishTemplate(Vector3.forward * 3 * i, rubbishIndex));
 			}
 
-			for (var i = 0; i < 40; i++)
+			for (var i = 0; i < 0; i++)
 			{
 				snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateBinJuiceTemplate(Vector3.forward * 3 * i));
+			}
+
+			for (var i = 0; i < 40; i++)
+			{
+				snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateStoneTemplate(Vector3.forward * 3 * i));
 			}
 
 			SaveSnapshot(snapshotEntities);
