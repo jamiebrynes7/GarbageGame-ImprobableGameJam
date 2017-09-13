@@ -12,14 +12,14 @@ using Improbable.Unity.Common.Core.Math;
 
 
 [WorkerType(WorkerPlatform.UnityClient)]
-public class BinmanInteractions : MonoBehaviour
+public class BinbagInteractions : MonoBehaviour
 {
-	[Require] StoneInfo.Writer StoneInfoWriter;
+	[Require] BinJuiceInfo.Writer BinJuiceInfoWriter;
 
 	private void Update(){
 		if (Input.GetKeyDown(KeyCode.Q))
 		{
-			StoneInfoWriter.Send (new StoneInfo.Update().AddSpawn(new SpawnData(this.transform.position.ToSpatialCoordinates())));
+			BinJuiceInfoWriter.Send (new BinJuiceInfo.Update().AddSpawn(new BinJuiceSpawnData(this.transform.position.ToSpatialCoordinates())));
 		}
 	}
 }

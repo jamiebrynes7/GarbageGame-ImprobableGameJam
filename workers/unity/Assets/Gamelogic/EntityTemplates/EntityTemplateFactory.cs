@@ -55,6 +55,7 @@ namespace Assets.Gamelogic.EntityTemplates
 				.AddComponent(new PlayerMovement.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
 				.AddComponent(new BinbagVisuals.Data(Lean.NONE), CommonRequirementSets.SpecificClientOnly(clientId))
 				.AddComponent(new BinbagInfo.Data(10, 0), CommonRequirementSets.PhysicsOnly)
+				.AddComponent(new BinJuiceInfo.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
 				.Build();
 
 			return template;

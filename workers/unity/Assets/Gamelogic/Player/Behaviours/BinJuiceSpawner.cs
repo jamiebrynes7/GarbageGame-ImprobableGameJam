@@ -12,22 +12,22 @@ using Improbable.Unity.Common.Core.Math;
 
 
 [WorkerType(WorkerPlatform.UnityWorker)]
-public class StoneSpawner : MonoBehaviour
+public class BinJuiceSpawner : MonoBehaviour
 {
-	[Require] BinmanInfo.Writer BinmanInfoWriter;
-	[Require] StoneInfo.Reader StoneInfoReader;
+	[Require] BinbagInfo.Writer BinbagInfoWriter;
+	[Require] BinJuiceInfo.Reader BinJuiceInfoReader;
 
 	private void OnEnable() {
-		StoneInfoReader.SpawnTriggered.Add (CreateStone);
+		BinJuiceInfoReader.SpawnTriggered.Add (CreateBinJuice);
 	}
 
 	private void OnDisable() {
-		StoneInfoReader.SpawnTriggered.Remove(CreateStone);
+		BinJuiceInfoReader.SpawnTriggered.Remove(CreateBinJuice);
 	}
 
-	private void CreateStone(SpawnData args) {
-		var entityTemplate = Assets.Gamelogic.EntityTemplates.EntityTemplateFactory.CreateStoneTemplate (args.initialPosition.ToUnityVector());
-		SpatialOS.Commands.CreateEntity(BinmanInfoWriter, entityTemplate)
+	private void CreateBinJuice(BinJuiceSpawnData args) {
+		var entityTemplate = Assets.Gamelogic.EntityTemplates.EntityTemplateFactory.CreateBinJuiceTemplate (args.initialPosition.ToUnityVector());
+		SpatialOS.Commands.CreateEntity(BinbagInfoWriter, entityTemplate)
 			.OnFailure(errorDetails => Debug.LogWarning("Failed to drop stone with error: " + errorDetails.ErrorMessage));
 	}
 }
