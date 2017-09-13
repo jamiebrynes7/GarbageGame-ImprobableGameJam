@@ -9,12 +9,10 @@ using Improbable;
 using Improbable.Core;
 using UnityEngine.AI;
 using Improbable.Unity.Common.Core.Math;
-
-
+using Assets.Gamelogic.Utils;
 
 namespace Assets.Gamelogic.Player.Behaviours
 {
-	// Add this MonoBehaviour on client workers only
 	[WorkerType(WorkerPlatform.UnityWorker)]
 	public class HealthChecker : MonoBehaviour
 	{
@@ -47,12 +45,8 @@ namespace Assets.Gamelogic.Player.Behaviours
 		}
 
 		private void Respawn() {
-			Vector3 position = new Vector3(Random.Range(-100, 100), 2, Random.Range(-100, 100));
-			NavMeshHit hit;
-			NavMesh.SamplePosition(position, out hit, 10, NavMesh.AllAreas);
-			position = hit.position;
+			Vector3 position = PositionUtils.GetRandomPosition();
 			this.gameObject.transform.position = position;
-			Debug.LogWarning (position);
 			var clientInfo = GetComponent<BinbagClientNPCInfo>();
 			if (clientInfo == null || !clientInfo.IsNPCBinBag ()) {
 				SpatialOS.Commands.SendCommand (BinbagInfoWriter, PlayerMovement.Commands.Respawn.Descriptor, new SpawnPosition (position.ToSpatialVector3d ()), this.gameObject.EntityId ())
