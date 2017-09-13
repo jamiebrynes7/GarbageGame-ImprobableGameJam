@@ -1,0 +1,11 @@
+package improbable.environment;
+
+import "improbable/standard_library.schema";
+
+type BinJuiceSpawnData {
+  Coordinates initial_position = 1;
+}
+component BinJuiceInfo {
+    id = 1307;
+    event BinJuiceSpawnData spawn;
+}

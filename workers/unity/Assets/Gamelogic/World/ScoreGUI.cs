@@ -20,8 +20,8 @@ namespace Assets.Gamelogic.World
 		{
 			binbagTotalPointsGUI = GameObject.Find ("BinbagScore").GetComponent<Text>();
 			binmanTotalPointsGUI = GameObject.Find ("BinmanScore").GetComponent<Text>();
-			updateBinmanGUI(0);
-			updateBinbagGUI (0);
+			updateBinmanGUI(ScoreReader.Data.binmanScore);
+			updateBinbagGUI (ScoreReader.Data.binbagScore);
 		}
 
 		private void OnEnable()
