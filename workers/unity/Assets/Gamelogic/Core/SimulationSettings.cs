@@ -60,5 +60,6 @@ namespace Assets.Gamelogic.Core
         // Tags for collisions
         public static readonly string BinbagTag = "Binbag";
         public static readonly string BinmanTag = "Binman";
+        public static readonly string RubbishTipTag = "RubbishTip";
     }
 }

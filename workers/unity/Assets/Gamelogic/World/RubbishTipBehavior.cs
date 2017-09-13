@@ -14,7 +14,6 @@ namespace Assets.Gamelogic.World {
 	public class RubbishTipBehavior : MonoBehaviour {
 
 		[Require] private RubbishTipInfo.Reader RubbishTipInfoReader;
-
 		public int capacity;
 
 		private void OnEnable()
