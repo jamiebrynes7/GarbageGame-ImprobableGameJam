@@ -33,12 +33,15 @@ public class ArrowPointerManager : MonoBehaviour {
 			render.enabled = true;
 			arrow.transform.LookAt(closestRubbishTip.transform);
 		}
+		else {
+			// Disable the arrow renderer.
+			MeshRenderer render = arrow.GetComponentInChildren<MeshRenderer>();
+			render.enabled = false;
+		}
 	}
 
 	private void OnEnable()
 	{
-
-
 		// Poll local worker area for current list of tips in the world.
 		GetCurrentRubbishTips();
 
@@ -49,7 +52,7 @@ public class ArrowPointerManager : MonoBehaviour {
 
 	private void GetCurrentRubbishTips()
 	{	
-		rubbishTips = GameObject.FindGameObjectsWithTag(SimulationSettings.RubbishTipTag);
+		rubbishTips = GameObject.FindGameObjectsWithTag("RubbishTipWtf");
 	}
 
 	private void LookAtClosestTip()
