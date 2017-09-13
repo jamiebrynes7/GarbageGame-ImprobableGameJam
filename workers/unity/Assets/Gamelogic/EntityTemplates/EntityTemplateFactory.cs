@@ -156,11 +156,11 @@ namespace Assets.Gamelogic.EntityTemplates
             return template;
         }
 
-		public static Entity CreateScoreTrackerTemplate()
+		public static Entity CreateWorldTrackerTemplate()
 		{
 			var template = EntityBuilder.Begin()
 				.AddPositionComponent(new Vector3(0,0,0), CommonRequirementSets.PhysicsOnly)
-				.AddMetadataComponent(SimulationSettings.ScoreTrackerPrefabName)
+				.AddMetadataComponent(SimulationSettings.WorldTrackerPrefabName)
 				.SetPersistence(true)
 				.SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
 				.AddComponent(new Score.Data(0, 0), CommonRequirementSets.PhysicsOnly)
