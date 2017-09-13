@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Improbable.Core;
 using Improbable.Unity.Visualizer;
 using Improbable.Unity.Core;
+using Improbable.Entity.Component;
 using UnityEngine;
 
 using Improbable.Environment;
@@ -13,17 +14,32 @@ namespace Assets.Gamelogic.World {
 	[WorkerType(WorkerPlatform.UnityWorker)]
 	public class RubbishTipBehavior : MonoBehaviour {
 
-		[Require] private RubbishTipInfo.Reader RubbishTipInfoReader;
+		[Require] private RubbishTipInfo.Writer RubbishTipInfoWriter;
 		public int capacity;
 
 		private void OnEnable()
 		{
-			RubbishTipInfoReader.NumberBinBagsUpdated.Add(OnNumberBinBagsUpdated);
+			RubbishTipInfoWriter.NumberBinBagsUpdated.Add(OnNumberBinBagsUpdated);
+
+			// Register command responses.
+			RubbishTipInfoWriter.CommandReceiver.OnIncrementTip.RegisterResponse(OnIncrementTip);
 		}
 		
 		private void OnDisable()
 		{
-			RubbishTipInfoReader.NumberBinBagsUpdated.Remove(OnNumberBinBagsUpdated);
+			RubbishTipInfoWriter.NumberBinBagsUpdated.Remove(OnNumberBinBagsUpdated);
+
+
+			// Deregister command response
+			RubbishTipInfoWriter.CommandReceiver.OnIncrementTip.DeregisterResponse();
+		}
+
+		private IncrementTipResponse OnIncrementTip(IncrementTipRequest request, ICommandCallerInfo callerInfo)
+		{
+			uint new_number = RubbishTipInfoWriter.Data.numberBinBags + 1;
+			RubbishTipInfoWriter.Send( new RubbishTipInfo.Update().SetNumberBinBags(new_number));
+
+			return new IncrementTipResponse();
 		}
 
 		private void OnNumberBinBagsUpdated(uint numberBinBags) {

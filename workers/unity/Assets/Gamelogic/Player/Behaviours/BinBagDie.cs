@@ -45,6 +45,30 @@ public class BinBagDie : MonoBehaviour
 					.OnFailure (errorDetails => Debug.LogWarning ("Failed to award points with error: " + errorDetails.ErrorMessage));
 			}
 		}
+		if (collision != null && collision.gameObject.tag == "RubbishTipWtf")
+		{
+			// We want to award points to the binbags and increment the counter on the tips.
+			// Also want to respawn player.
+
+
+			// Force player to respawn
+			uint newHealth = BinbagInfoWriter.Data.health - 10;
+			BinbagInfoWriter.Send( new BinbagInfo.Update().SetHealth(newHealth));
+
+			// Give points to the binbags.
+			GameObject scoreTracker = GameObject.FindGameObjectWithTag ("ScoreTracker");
+			if (scoreTracker != null) {
+				SpatialOS.Commands.SendCommand(BinbagInfoWriter, Score.Commands.AwardBinbagPoints.Descriptor, new AwardPoints(BinbagInfoWriter.Data.size + 1), scoreTracker.EntityId())
+					.OnSuccess( result => Debug.LogWarning("Awarded points to the binbags."))
+					.OnFailure( errorDetails => Debug.LogWarning("Failed to award points with error: " + errorDetails.ErrorMessage));
+			}
+
+			// Increment counter on the tip
+			SpatialOS.Commands.SendCommand(BinbagInfoWriter, RubbishTipInfo.Commands.IncrementTip.Descriptor, new IncrementTipRequest(), collision.gameObject.EntityId())
+				.OnSuccess( result => Debug.LogWarning("Incremented tip"))
+				.OnFailure( errorDetails => Debug.LogWarning("Failed to increment tip."));
+
+		}
 			
 	}
 }
