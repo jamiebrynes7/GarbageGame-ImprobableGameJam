@@ -35,9 +35,9 @@ public class NameplateController : MonoBehaviour {
 	void LateUpdate()
 	{
 		if (camera != null) {
-			// Only want to rotate along Y-axis
-			Vector3 targetPos = new Vector3(camera.transform.position.x, NameplateTextHolder.transform.position.y, camera.transform.position.z);
-            NameplateTextHolder.transform.LookAt(camera.transform.position);
+            // Only want to rotate along Y-axis
+            Vector3 targetPos = NameplateTextHolder.transform.position + new Vector3(0f, camera.transform.position.y, -10f);
+            NameplateTextHolder.transform.LookAt(targetPos);
 		}
 		else {
 			camera = FindCamera();
