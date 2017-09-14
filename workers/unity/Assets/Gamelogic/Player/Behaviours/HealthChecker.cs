@@ -10,6 +10,7 @@ using Improbable.Core;
 using UnityEngine.AI;
 using Improbable.Unity.Common.Core.Math;
 using Assets.Gamelogic.Utils;
+using UnityEngine.UI;
 
 namespace Assets.Gamelogic.Player.Behaviours
 {
@@ -32,6 +33,14 @@ namespace Assets.Gamelogic.Player.Behaviours
 		// Callback for whenever the CurrentHealth property of the Health component is updated
 		private void OnCurrentHealthUpdated(uint currentHealth)
 		{
+
+			// Update UI display
+			Slider healthSlider = GameObject.Find("Canvas/HealthDisplay").GetComponent<Slider>();
+			if (healthSlider != null)
+			{
+				healthSlider.normalizedValue = Mathf.Clamp01(currentHealth / 10);
+			}
+
 			if (currentHealth <= 0)
 			{
 				Respawn ();
