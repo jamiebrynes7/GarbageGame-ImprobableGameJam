@@ -13,14 +13,19 @@ public class SplashScreenController : MonoBehaviour {
 	[SerializeField] public Button BinbagButton;
 	[SerializeField] public Button BinmanButton;
 
+	private AudioSource audioSource;
+	public AudioClip clickSound;
+
 	// Button callback for "Connect as Binbag"
 	public void AttemptBinbagConnection() {
+		PlayClickSound();
 		SetIsBinBag(true);
 		AttemptSpatialOsConnection();
 	}
 
 	// Button callback for "Connect as Binman"
 	public void AttemptBinmanConnection() {
+		PlayClickSound();
 		SetIsBinBag(false);
 		AttemptSpatialOsConnection();
 	}
@@ -59,4 +64,19 @@ public class SplashScreenController : MonoBehaviour {
 		BinbagButton.interactable = true;
 		BinmanButton.interactable = true;
 	}
+
+	/*
+		Section for playing sound on a button press.
+	 */
+
+	 private void PlayClickSound()
+	 {
+		 if (audioSource == null)
+		 {
+			 audioSource = gameObject.AddComponent<AudioSource>();
+		 }
+
+		 audioSource.clip = clickSound;
+		 audioSource.Play();
+	 }
 }
