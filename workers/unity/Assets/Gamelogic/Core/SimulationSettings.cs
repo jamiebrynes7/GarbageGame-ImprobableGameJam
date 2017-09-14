@@ -12,7 +12,7 @@ namespace Assets.Gamelogic.Core
         public static readonly string RubbishTipPrefabName = "RubbishTip";
 		public static readonly string WorldTrackerPrefabName = "WorldTracker";
 
-        public static readonly float ClientConnectionTimeoutSecs = 7;
+        public static readonly float ClientConnectionTimeoutSecs = 15;
 
         public static readonly float HeartbeatCheckIntervalSecs = 3;
         public static readonly uint TotalHeartbeatsBeforeTimeout = 3;
@@ -22,7 +22,7 @@ namespace Assets.Gamelogic.Core
         public static readonly int TargetServerFramerate = 60;
         public static readonly int FixedFramerate = 20;
 
-        public static readonly float PlayerCreatorQueryRetrySecs = 4;
+        public static readonly float PlayerCreatorQueryRetrySecs = 10;
         public static readonly float PlayerEntityCreationRetrySecs = 4;
 
         public static readonly string DefaultSnapshotPath = Application.dataPath + "/../../../snapshots/default.snapshot";

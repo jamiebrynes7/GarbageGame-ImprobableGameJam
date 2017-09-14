@@ -17,9 +17,11 @@ public class BinmanInteractions : MonoBehaviour
 	[Require] StoneInfo.Writer StoneInfoWriter;
 
 	private void Update(){
-		if (Input.GetKeyDown(KeyCode.Q))
+		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			StoneInfoWriter.Send (new StoneInfo.Update().AddSpawn(new SpawnData(this.transform.position.ToSpatialCoordinates())));
+            var position = this.transform.position;
+            position.y = 0;
+			StoneInfoWriter.Send (new StoneInfo.Update().AddSpawn(new SpawnData(position.ToSpatialCoordinates())));
 		}
 	}
 }

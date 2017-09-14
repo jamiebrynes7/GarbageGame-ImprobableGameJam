@@ -26,7 +26,9 @@ namespace Assets.Editor
 
 			for (var i = 0; i < 20; i++)
 			{
-				snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateBinbagNPCTemplate(Vector3.right * 3));
+				var position = PositionUtils.GetRandomPosition();
+				position.y = 0;
+				snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateBinbagNPCTemplate(position));
 			}
 
 			for (var i = 0; i < 0; i++)
@@ -45,7 +47,7 @@ namespace Assets.Editor
 				snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateStoneTemplate(Vector3.forward * 3 * i));
 			}
 
-			for (var i = 0; i < 10; i++)
+			for (var i = 0; i < 40; i++)
 			{
                 var position = PositionUtils.GetRandomPosition();
                 position.y = 0;
