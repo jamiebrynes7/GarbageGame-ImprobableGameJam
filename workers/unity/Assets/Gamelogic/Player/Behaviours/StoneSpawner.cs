@@ -24,7 +24,7 @@ public class StoneSpawner : MonoBehaviour
 	private void OnDisable() {
 		StoneInfoReader.SpawnTriggered.Remove(CreateStone);
 	}
-
+		
 	private void CreateStone(SpawnData args) {
 		var entityTemplate = Assets.Gamelogic.EntityTemplates.EntityTemplateFactory.CreateStoneTemplate (args.initialPosition.ToUnityVector());
 		SpatialOS.Commands.CreateEntity(BinmanInfoWriter, entityTemplate)

@@ -8,6 +8,7 @@ using Improbable.Unity.Common.Core.Math;
 using Improbable.Unity.Visualizer;
 using UnityEngine;
 using UnityEngine.AI;
+using Improbable.Entity.Component;
 
 [WorkerType(WorkerPlatform.UnityWorker)]
 public class BinbagNPCController : MonoBehaviour {
@@ -29,11 +30,13 @@ public class BinbagNPCController : MonoBehaviour {
         navMeshAgent.enabled = true;
         rigidBody.isKinematic = true;
         UpdateTarget();
+		playerMovementWriter.CommandReceiver.OnRespawn.RegisterResponse (OnRespawn);
     }
 
     private void OnDisable()
     {
         navMeshAgent.enabled = false;
+		playerMovementWriter.CommandReceiver.OnRespawn.DeregisterResponse ();
     }
 
     private void Update()
@@ -47,6 +50,12 @@ public class BinbagNPCController : MonoBehaviour {
 
         UpdatePlayerControls();
 	}
+
+	private MovementResponse OnRespawn(SpawnPosition position, ICommandCallerInfo callerInfo) {
+		rigidBody.MovePosition(position.position.ToUnityVector());
+		return new MovementResponse (position.position);
+	}
+
 
 	private void UpdatePlayerControls()
 	{
@@ -65,5 +74,4 @@ public class BinbagNPCController : MonoBehaviour {
         Vector3 randomPoint = PositionUtils.GetRandomPosition();
         navMeshAgent.destination = randomPoint;
     }
-
 }

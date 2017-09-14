@@ -27,6 +27,13 @@ namespace Assets.Gamelogic.Player
         [SerializeField] private Collider playerCollider;
         [SerializeField] private Animator playerAnimator;
 
+		private GameObject model;
+		private float invisibleTimer = -10f;
+
+		public void Start() {
+			model = this.transform.FindChild ("Model").gameObject;
+		}
+
         private void OnEnable()
         {
             transform.position = PositionReader.Data.coords.ToUnityVector();
@@ -51,6 +58,28 @@ namespace Assets.Gamelogic.Player
                 playerCollider.isTrigger = false;
 			}
         }
+
+		private void Update() {
+
+			if (invisibleTimer > 0) {
+				invisibleTimer -= Time.deltaTime;
+			}
+			if (invisibleTimer <= 0 && model != null && !model.activeInHierarchy) {
+				model.SetActive (true);
+			}
+		}
+
+		private void OnTriggerEnter(Collider other)
+		{
+			if (other.tag == "Binman" && model.activeSelf)
+			{
+				if (model == null) {
+					model = this.transform.FindChild ("Model").gameObject;
+				}
+				model.SetActive (false);
+				invisibleTimer = 1f;
+			}
+		}
 
         private void SaveMovementUpdate(MovementUpdate movementUpdate)
         {
