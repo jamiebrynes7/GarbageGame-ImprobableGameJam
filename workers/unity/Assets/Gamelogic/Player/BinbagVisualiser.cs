@@ -4,50 +4,61 @@ using Improbable.Player;
 using Improbable.Unity;
 using Improbable.Unity.Visualizer;
 using UnityEngine;
+using Improbable.Core;
+
 
 [WorkerType(WorkerPlatform.UnityClient)]
 public class BinbagVisualiser : MonoBehaviour {
 
-    private static float LEAN_ANGLE = 15f;
-    private static float LEAN_SPEED = 70f;
+	private static float LEAN_ANGLE = 15f;
+	private static float LEAN_SPEED = 70f;
 
-    private static float SPIN_SPEED = 700f;
+	private static float SPIN_SPEED = 700f;
 
-    [Require]
-    private BinbagVisuals.Reader binbagVisualsReader;
+	[Require]
+	private BinbagVisuals.Reader binbagVisualsReader;
 
-    public Transform modelTransform;
+	public Transform modelTransform;
 
-    public Transform spinTransform;
+	public Transform spinTransform;
 
-    private Quaternion targetLean = Quaternion.identity;
+	private Quaternion targetLean = Quaternion.identity;
 
-    private void OnEnable()
-    {
-        binbagVisualsReader.BagLeanUpdated.AddAndInvoke(LeanUpdated);
-    }
+	private void OnEnable()
+	{
+		binbagVisualsReader.BagLeanUpdated.AddAndInvoke(LeanUpdated);
+	}
 
 	private void OnDisable()
 	{
 		binbagVisualsReader.BagLeanUpdated.Remove(LeanUpdated);
 	}
 
-    private void Update()
-    {
-        modelTransform.localRotation = Quaternion.RotateTowards(modelTransform.localRotation, targetLean, LEAN_SPEED * Time.deltaTime);
-        spinTransform.Rotate(Vector3.right * Time.deltaTime * SPIN_SPEED);
-    }
+	private void Update()
+	{
+		modelTransform.localRotation = Quaternion.RotateTowards(modelTransform.localRotation, targetLean, LEAN_SPEED * Time.deltaTime);
+		spinTransform.Rotate(Vector3.right * Time.deltaTime * SPIN_SPEED);
+	}
 
-    private void LeanUpdated(Lean lean){
-        float leanAngle = LEAN_ANGLE;
-        switch(lean){
-            case Lean.RIGHT:
-                leanAngle *= -1f;
-                break;
-            case Lean.NONE:
-                leanAngle = 0f;
-                break;
-        }
-        targetLean = Quaternion.Euler(0f, 0f, leanAngle);
-    }
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.tag == "Binman")
+		{
+			this.transform.FindChild ("Model").gameObject.SetActive (false);
+
+		}
+	}
+
+	private void LeanUpdated(Lean lean){
+		float leanAngle = LEAN_ANGLE;
+		switch(lean){
+		case Lean.RIGHT:
+			leanAngle *= -1f;
+			break;
+		case Lean.NONE:
+			leanAngle = 0f;
+			break;
+		}
+		targetLean = Quaternion.Euler(0f, 0f, leanAngle);
+	}
 }

@@ -22,7 +22,7 @@ public class RubbishSpawner : MonoBehaviour
 
 	private void Update() {
 		time += Time.deltaTime;
-		if (time > 3) {
+		if (time > 6) {
 			Vector3 position = PositionUtils.GetRandomPosition ();
 			var entityTemplate = Assets.Gamelogic.EntityTemplates.EntityTemplateFactory.CreateRubbishTemplate (position, (uint) Random.Range(0, 3));
 			SpatialOS.Commands.CreateEntity (ScoreWriter, entityTemplate)

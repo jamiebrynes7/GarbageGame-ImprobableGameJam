@@ -16,6 +16,12 @@ public class BinbagInteractions : MonoBehaviour
 {
 	[Require] BinJuiceInfo.Writer BinJuiceInfoWriter;
 
+	private void OnTriggerEnter(Collider collision){
+		if (collision.tag == "Binman") {
+			SpatialOS.Commands.SendCommand (BinJuiceInfoWriter, BinbagInfo.Commands.BinmanTriggered.Descriptor, new TriggerData (this.transform.position.ToSpatialCoordinates ()),  this.gameObject.EntityId ());
+		}
+	}
+
 	private void Update(){
 		if (Input.GetKeyDown(KeyCode.Q))
 		{
