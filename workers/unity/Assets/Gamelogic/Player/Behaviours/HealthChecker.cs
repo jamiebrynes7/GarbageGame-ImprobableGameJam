@@ -33,14 +33,6 @@ namespace Assets.Gamelogic.Player.Behaviours
 		// Callback for whenever the CurrentHealth property of the Health component is updated
 		private void OnCurrentHealthUpdated(int currentHealth)
 		{
-
-			// Update UI display
-			Slider healthSlider = GameObject.Find("Canvas/HealthDisplay").GetComponent<Slider>();
-			if (healthSlider != null)
-			{
-				healthSlider.normalizedValue = Mathf.Clamp01(currentHealth / 10);
-			}
-
 			if (currentHealth <= 0)
 			{
 				Respawn ();
