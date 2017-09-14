@@ -24,11 +24,7 @@ namespace Assets.Editor
 			//snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateCubeTemplate());
 			snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateWorldTrackerTemplate());
 
-<<<<<<< HEAD
 			for (var i = 0; i < 0; i++)
-=======
-			for (var i = 0; i < 20; i++)
->>>>>>> master
 			{
 				var position = PositionUtils.GetRandomPosition();
 				position.y = 0;
@@ -46,9 +42,6 @@ namespace Assets.Editor
 				snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateBinJuiceTemplate(Vector3.forward * 3 * i));
 			}
 
-<<<<<<< HEAD
-			snapshotEntities.Add( new EntityId(currentEntityId++), EntityTemplateFactory.CreateRubbishTipTemplate(Vector3.forward * 10));
-=======
 			for (var i = 0; i < 0; i++)
 			{
 				snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateStoneTemplate(Vector3.forward * 3 * i));
@@ -61,7 +54,6 @@ namespace Assets.Editor
                 Debug.Log(position);
                 snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateRubbishTipTemplate(position));
 			}
->>>>>>> master
 
 			SaveSnapshot(snapshotEntities);
 		}
