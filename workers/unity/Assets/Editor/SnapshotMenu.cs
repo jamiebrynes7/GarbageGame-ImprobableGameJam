@@ -23,7 +23,7 @@ namespace Assets.Editor
 			//snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateCubeTemplate());
 			snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateScoreTrackerTemplate());
 
-			for (var i = 0; i < 40; i++)
+			for (var i = 0; i < 0; i++)
 			{
 				snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateBinbagNPCTemplate(Vector3.right * 3));
 			}
@@ -38,6 +38,8 @@ namespace Assets.Editor
 			{
 				snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateBinJuiceTemplate(Vector3.forward * 3 * i));
 			}
+
+			snapshotEntities.Add( new EntityId(currentEntityId++), EntityTemplateFactory.CreateRubbishTipTemplate(Vector3.forward * 10));
 
 			SaveSnapshot(snapshotEntities);
 		}
