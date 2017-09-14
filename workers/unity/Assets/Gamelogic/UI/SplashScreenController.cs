@@ -19,6 +19,12 @@ public class SplashScreenController : MonoBehaviour {
 
 	private string Name;
 
+	private void OnEnable()
+	{
+		Name = NameRandomizerUtils.GenerateName();
+		NameInput.text = Name;
+	}
+
 
 	/*
 		UI control section.
@@ -71,6 +77,10 @@ public class SplashScreenController : MonoBehaviour {
 
 	private void AttemptConnection() 
 	{
+		if (Name == "")
+		{
+			Name = "NiceTryGuy";
+		}
 		SetPlayerName();
         FindObjectOfType<Bootstrap>().ConnectToSpatialOS();
 		StartCoroutine(TimerUtils.WaitAndPerform(SimulationSettings.ClientConnectionTimeoutSecs, ConnectionTimeout));
