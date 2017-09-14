@@ -17,9 +17,11 @@ public class BinbagInteractions : MonoBehaviour
 	[Require] BinJuiceInfo.Writer BinJuiceInfoWriter;
 
 	private void Update(){
-		if (Input.GetKeyDown(KeyCode.Q))
+		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			BinJuiceInfoWriter.Send (new BinJuiceInfo.Update().AddSpawn(new BinJuiceSpawnData(this.transform.position.ToSpatialCoordinates())));
+			var position = this.transform.position;
+			position.y = 0;
+			BinJuiceInfoWriter.Send (new BinJuiceInfo.Update().AddSpawn(new BinJuiceSpawnData(position.ToSpatialCoordinates())));
 		}
 	}
 }

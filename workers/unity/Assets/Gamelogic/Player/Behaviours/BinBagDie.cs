@@ -32,7 +32,7 @@ public class BinBagDie : MonoBehaviour
 				return;
 			if (BinbagInfoWriter.Data.health < 0)
 				return;
-			uint newHealth = BinbagInfoWriter.Data.health - 10;
+			int newHealth = 0;
 			Debug.LogWarning ("HIT " + newHealth);
 
 			BinbagInfoWriter.Send (new BinbagInfo.Update().SetHealth(newHealth));
@@ -52,7 +52,7 @@ public class BinBagDie : MonoBehaviour
 
 
 			// Force player to respawn
-			uint newHealth = BinbagInfoWriter.Data.health - 10;
+			int newHealth = 0;
 			BinbagInfoWriter.Send( new BinbagInfo.Update().SetHealth(newHealth));
 
 			// Give points to the binbags.
