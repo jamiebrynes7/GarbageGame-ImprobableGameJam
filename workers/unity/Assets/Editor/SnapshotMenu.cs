@@ -47,11 +47,10 @@ namespace Assets.Editor
 				snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateStoneTemplate(Vector3.forward * 3 * i));
 			}
 
-			for (var i = 0; i < 40; i++)
+			for (var i = 0; i < 5; i++)
 			{
                 var position = PositionUtils.GetRandomPosition();
                 position.y = 0;
-                Debug.Log(position);
                 snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateRubbishTipTemplate(position));
 			}
 
