@@ -30,7 +30,7 @@ namespace Assets.Gamelogic.Player.Behaviours
 
 
 		// Callback for whenever the CurrentHealth property of the Health component is updated
-		private void OnCurrentHealthUpdated(uint currentHealth)
+		private void OnCurrentHealthUpdated(int currentHealth)
 		{
 			if (currentHealth <= 0)
 			{

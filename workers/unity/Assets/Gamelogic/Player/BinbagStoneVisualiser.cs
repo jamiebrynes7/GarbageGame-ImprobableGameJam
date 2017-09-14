@@ -9,7 +9,7 @@ public class BinbagStoneVisualiser : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.tag == "Stone" || other.tag == "Rubbish")
+		if (other.tag == "StoneWtf" || other.tag == "Rubbish")
 		{
             other.gameObject.SetActive(false);
         }

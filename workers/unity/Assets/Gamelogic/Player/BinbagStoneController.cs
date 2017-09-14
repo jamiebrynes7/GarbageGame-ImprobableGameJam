@@ -14,7 +14,7 @@ public class BinbagStoneController : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if(binbagInfoWriter != null && other.tag == "Stone"){
+        if(binbagInfoWriter != null && other.tag == "StoneWtf"){
             other.gameObject.SetActive(false);
             HitStone(other.transform.parent.gameObject);
 		}
