@@ -20,6 +20,12 @@ public class BinmanInteractions : MonoBehaviour
 
 	private float lastDropTime = -1f;
 
+	private void OnTriggerEnter(Collider collision){
+		if (collision.tag == "Binbag") {
+			SpatialOS.Commands.SendCommand (StoneInfoWriter, BinbagInfo.Commands.BinmanTriggered.Descriptor, new TriggerData (this.transform.position.ToSpatialCoordinates ()), collision.gameObject.EntityId ());
+		}
+	}
+
 	private void Update(){
 		if (Input.GetKeyDown(KeyCode.Space) && Time.time > lastDropTime + DROP_INTERVAL)
 		{

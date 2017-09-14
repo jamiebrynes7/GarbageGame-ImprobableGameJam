@@ -1,12 +1,20 @@
 package improbable.player;
 
+import "improbable/standard_library.schema";
+
 enum Lean {
 	LEFT = 0;
 	NONE = 1;
 	RIGHT = 2;
 }
 
+type PickedUp {
+    Coordinates position = 1;
+}
+
 component BinbagVisuals {
     id = 1301;
     Lean bag_lean = 1;
+    event PickedUp picked_up;
 }
+
