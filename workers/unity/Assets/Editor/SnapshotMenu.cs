@@ -24,7 +24,7 @@ namespace Assets.Editor
 			//snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateCubeTemplate());
 			snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateWorldTrackerTemplate());
 
-			for (var i = 0; i < 20; i++)
+			for (var i = 0; i < 0; i++)
 			{
 				var position = PositionUtils.GetRandomPosition();
 				position.y = 0;

@@ -2,6 +2,7 @@ package improbable.core;
 
 type CreatePlayerRequest {
 	bool is_bin_bag = 1;
+  string name = 2;
 }
 type CreatePlayerResponse {}
 

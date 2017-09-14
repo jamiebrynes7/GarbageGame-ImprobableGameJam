@@ -145,6 +145,10 @@ namespace Assets.Gamelogic.Player
         private void UpdatePlayerControls()
         {
             var newTargetPosition = playerRigidbody.position;
+            // STOP CLIPPING PLS
+            if (newTargetPosition.y < -0.1f) {
+                playerRigidbody.position = new Vector3(newTargetPosition.x, 0.05f, newTargetPosition.z);
+            }
             if (ShouldUpdatePlayerTargetPosition(newTargetPosition))
             {
                 PositionWriter.Send(new Position.Update().SetCoords(new Coordinates(newTargetPosition.x, 0, newTargetPosition.z)));
