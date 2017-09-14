@@ -9,6 +9,7 @@ using Improbable.Unity.Visualizer;
 using UnityEngine;
 using UnityEngine.AI;
 using Improbable.Entity.Component;
+using Improbable.Collections;
 
 [WorkerType(WorkerPlatform.UnityWorker)]
 public class BinbagNPCController : MonoBehaviour {
@@ -20,6 +21,9 @@ public class BinbagNPCController : MonoBehaviour {
 	[Require]
     private PlayerMovement.Writer playerMovementWriter;
 
+	[Require]
+	private NPCInfo.Writer npcInfoWriter;
+
     public NavMeshAgent navMeshAgent;
     public Rigidbody rigidBody;
 
@@ -29,7 +33,15 @@ public class BinbagNPCController : MonoBehaviour {
     {
         navMeshAgent.enabled = true;
         rigidBody.isKinematic = true;
-        UpdateTarget();
+		if (npcInfoWriter.Data.destination.HasValue)
+		{
+			Vector3 position = npcInfoWriter.Data.destination.Value.ToUnityVector();
+			navMeshAgent.destination = position;
+		}
+		else
+		{
+			UpdateTarget();
+		}
 		playerMovementWriter.CommandReceiver.OnRespawn.RegisterResponse (OnRespawn);
     }
 
@@ -43,7 +55,7 @@ public class BinbagNPCController : MonoBehaviour {
     {
         float dist = navMeshAgent.remainingDistance;
         if (navMeshAgent.pathStatus == NavMeshPathStatus.PathComplete
-            && System.Math.Abs(navMeshAgent.remainingDistance) < 0.5f)
+            && System.Math.Abs(navMeshAgent.remainingDistance) < 5f)
         {
             UpdateTarget();
         }
@@ -72,6 +84,7 @@ public class BinbagNPCController : MonoBehaviour {
 
     private void UpdateTarget(){
         Vector3 randomPoint = PositionUtils.GetRandomPosition();
+		npcInfoWriter.Send(new NPCInfo.Update().SetDestination(new Option<Coordinates>(randomPoint.ToSpatialCoordinates())));
         navMeshAgent.destination = randomPoint;
     }
 }

@@ -60,13 +60,13 @@ public class BinBagDie : MonoBehaviour
 			GameObject scoreTracker = GameObject.FindGameObjectWithTag ("ScoreTracker");
 			if (scoreTracker != null) {
 				SpatialOS.Commands.SendCommand(BinbagInfoWriter, Score.Commands.AwardBinbagPoints.Descriptor, new AwardPoints(BinbagInfoWriter.Data.size + 1), scoreTracker.EntityId())
-					.OnSuccess( result => Debug.LogWarning("Awarded points to the binbags."))
+					.OnSuccess( result => )
 					.OnFailure( errorDetails => Debug.LogWarning("Failed to award points with error: " + errorDetails.ErrorMessage));
 			}
 
 			// Increment counter on the tip
 			SpatialOS.Commands.SendCommand(BinbagInfoWriter, RubbishTipInfo.Commands.IncrementTip.Descriptor, new IncrementTipRequest(), collision.gameObject.EntityId())
-				.OnSuccess( result => Debug.LogWarning("Incremented tip"))
+				.OnSuccess( result => )
 				.OnFailure( errorDetails => Debug.LogWarning("Failed to increment tip."));
 
 		}
@@ -81,7 +81,6 @@ public class BinBagDie : MonoBehaviour
 	}
 
 	private TriggerResponse OnPickedUpTriggered(TriggerData args, ICommandCallerInfo callerInfo) {
-		Debug.Log ("STILL COLLIDING: " + isColliding);
 		if (Vector3.Distance (this.transform.position, args.position.ToUnityVector()) < 4f && !isColliding) {
 			BinmanCollision ();
 		}
@@ -90,13 +89,12 @@ public class BinBagDie : MonoBehaviour
 
 
 	private void BinmanCollision() {
-		Debug.LogWarning ("COLLIDING");
 		int newHealth = 0;
 		BinbagInfoWriter.Send (new BinbagInfo.Update().SetHealth(newHealth));
 		GameObject scoreTracker = GameObject.FindGameObjectWithTag ("ScoreTracker");
 		if (scoreTracker != null) {
 			SpatialOS.Commands.SendCommand (BinbagInfoWriter, Score.Commands.AwardBinmanPoints.Descriptor, new AwardPoints (BinbagInfoWriter.Data.size + 1), scoreTracker.EntityId ())
-				.OnSuccess (result => Debug.LogWarning ("Awarded points to Binmen"))
+				.OnSuccess (result => )
 				.OnFailure (errorDetails => Debug.LogWarning ("Failed to award points with error: " + errorDetails.ErrorMessage));
 		}
 	}
