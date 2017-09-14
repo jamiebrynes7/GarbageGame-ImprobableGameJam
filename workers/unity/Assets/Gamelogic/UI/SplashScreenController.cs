@@ -12,27 +12,48 @@ public class SplashScreenController : MonoBehaviour {
 
 	[SerializeField] public Button BinbagButton;
 	[SerializeField] public Button BinmanButton;
+	[SerializeField] public InputField NameInput;
 
 	private AudioSource audioSource;
 	public AudioClip clickSound;
 
-	// Button callback for "Connect as Binbag"
+	private string Name;
+
+
+	/*
+		UI control section.
+	*/
 	public void AttemptBinbagConnection() {
 		PlayClickSound();
 		SetIsBinBag(true);
 		AttemptSpatialOsConnection();
 	}
 
-	// Button callback for "Connect as Binman"
 	public void AttemptBinmanConnection() {
 		PlayClickSound();
 		SetIsBinBag(false);
 		AttemptSpatialOsConnection();
 	}
 
+	public void OnChangeNameSelectorField()
+	{
+		Name = NameInput.text;
+	}
+
+	private void DisableUI() 
+	{
+		BinbagButton.interactable = false;
+		BinmanButton.interactable = false;
+		NameInput.interactable = false;
+	}
+
+
+	/*
+		SpatialOS connection details.
+	 */
 	private void AttemptSpatialOsConnection()
 	{
-		DisableConnectButtons();
+		DisableUI();
 		AttemptConnection();
 	}
 
@@ -42,14 +63,15 @@ public class SplashScreenController : MonoBehaviour {
 		boot.SetIsBinBag(isBinBag);
 	}
 
-	private void DisableConnectButtons() 
+	private void SetPlayerName()
 	{
-		BinbagButton.interactable = false;
-		BinmanButton.interactable = false;
+		Bootstrap boot = FindObjectOfType<Bootstrap>();
+		boot.SetPlayerName(Name);
 	}
 
 	private void AttemptConnection() 
 	{
+		SetPlayerName();
         FindObjectOfType<Bootstrap>().ConnectToSpatialOS();
 		StartCoroutine(TimerUtils.WaitAndPerform(SimulationSettings.ClientConnectionTimeoutSecs, ConnectionTimeout));
 	}
@@ -63,6 +85,7 @@ public class SplashScreenController : MonoBehaviour {
 
 		BinbagButton.interactable = true;
 		BinmanButton.interactable = true;
+		NameInput.interactable = true;
 	}
 
 	/*

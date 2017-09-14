@@ -42,7 +42,7 @@ namespace Assets.Gamelogic.EntityTemplates
 			return template;
 		}
 
-		public static Entity CreateBinbagTemplate(string clientId)
+		public static Entity CreateBinbagTemplate(string clientId, string name)
 		{
 			var template = EntityBuilder.Begin()
 				.AddPositionComponent(new Vector3(0f, 0.333f, 0f), CommonRequirementSets.SpecificClientOnly(clientId))
@@ -56,6 +56,7 @@ namespace Assets.Gamelogic.EntityTemplates
 				.AddComponent(new BinbagVisuals.Data(Lean.NONE), CommonRequirementSets.SpecificClientOnly(clientId))
 				.AddComponent(new BinbagInfo.Data(10, 0), CommonRequirementSets.PhysicsOnly)
 				.AddComponent(new BinJuiceInfo.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
+				.AddComponent(new Nameplate.Data(name), CommonRequirementSets.PhysicsOrVisual)
 				.Build();
 
 			return template;
@@ -89,7 +90,7 @@ namespace Assets.Gamelogic.EntityTemplates
 			return template;
 		}
 
-		public static Entity CreateBinmanTemplate(string clientId)
+		public static Entity CreateBinmanTemplate(string clientId, string name)
 		{
 			var template = EntityBuilder.Begin()
 				.AddPositionComponent(Vector3.zero, CommonRequirementSets.SpecificClientOnly(clientId))
@@ -102,6 +103,7 @@ namespace Assets.Gamelogic.EntityTemplates
 				.AddComponent(new PlayerMovement.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
                 .AddComponent(new BinmanInfo.Data(false), CommonRequirementSets.PhysicsOnly)
 				.AddComponent(new StoneInfo.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
+				.AddComponent(new Nameplate.Data(name), CommonRequirementSets.PhysicsOrVisual)
 				.Build();
 
 			return template;
