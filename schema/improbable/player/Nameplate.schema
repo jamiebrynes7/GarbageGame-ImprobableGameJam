@@ -1,0 +1,6 @@
+package improbable.player;
+
+component Nameplate {
+    id = 768;
+    string name = 1;
+}
