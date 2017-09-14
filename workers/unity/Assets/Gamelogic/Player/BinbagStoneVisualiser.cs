@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Improbable.Core;
 using Improbable.Unity;
 using Improbable.Unity.Visualizer;
 using UnityEngine;

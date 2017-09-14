@@ -8,32 +8,43 @@ using UnityEngine;
 
 public class BinmanDrunkVisualiser : MonoBehaviour {
 
+    public AudioClip drunkSound;
+
     [Require]
     private BinmanInfo.Reader binmanInfoReader;
 
     [Require]
     private ClientAuthorityCheck.Writer authorityCheck;
 
+	private AudioSource audioSource;
+
     private void OnEnable()
     {
         binmanInfoReader.IsDrunkUpdated.Add(IsDrunkChanged);
+        LoadAudio();
     }
 
 	private void OnDisable()
 	{
 		binmanInfoReader.IsDrunkUpdated.Remove(IsDrunkChanged);
-	}
-
-	private void OnTriggerEnter(Collider other)
-	{
-		if (other.tag == "BinJuice")
+		if (audioSource != null)
 		{
-			other.gameObject.SetActive(false);
+			audioSource.Stop();
+			Destroy(audioSource);
 		}
 	}
 
     private void IsDrunkChanged(bool isDrunk){
-        Debug.Log("IS DRUNK: " + isDrunk);
         GetComponent<ThirdPersonPlayerControls>().SetIsDrunk(isDrunk);
+        if(isDrunk){
+            audioSource.Play();
+        }
     }
+
+	private void LoadAudio()
+	{
+		audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.clip = drunkSound;
+        audioSource.loop = false;
+	}
 }

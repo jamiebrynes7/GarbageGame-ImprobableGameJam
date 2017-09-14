@@ -16,7 +16,6 @@ public class MusicController : MonoBehaviour {
 
 	private void OnEnable() 
 	{
-		Debug.Log(crcWriter == null);	
 		if (crcWriter != null) {
 			LoadAudio();
 		}
@@ -27,6 +26,7 @@ public class MusicController : MonoBehaviour {
 		if (audioSource != null) 
 		{
 			audioSource.Stop();
+            Destroy(audioSource);
 		}
 	}
 

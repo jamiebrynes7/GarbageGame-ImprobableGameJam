@@ -9,7 +9,7 @@ using UnityEngine;
 [WorkerType(WorkerPlatform.UnityWorker)]
 public class BinmanBinJuiceController : MonoBehaviour
 {
-    private static float DRUNK_TIME = 10;
+    private static float DRUNK_TIME = 7;
 
     [Require]
     private BinmanInfo.Writer binmanInfoWriter;

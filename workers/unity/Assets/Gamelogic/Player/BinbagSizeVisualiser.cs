@@ -27,6 +27,9 @@ public class BinbagSizeVisualiser : MonoBehaviour {
 
     private void SizeUpdated(uint size){
         var scale = minSize + (size * rubbishAdd);
+        if(scale > 5){
+            scale = 5;
+        }
         bagTransform.localScale = Vector3.one * scale;
     }
 
