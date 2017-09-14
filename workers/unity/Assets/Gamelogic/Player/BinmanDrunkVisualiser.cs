@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using Assets.Gamelogic.Player;
 using Improbable.Core;
 using Improbable.Player;
+using Improbable.Unity;
 using Improbable.Unity.Visualizer;
 using UnityEngine;
 
+[WorkerType(WorkerPlatform.UnityClient)]
 public class BinmanDrunkVisualiser : MonoBehaviour {
 
     public AudioClip drunkSound;
