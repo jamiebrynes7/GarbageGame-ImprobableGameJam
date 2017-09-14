@@ -19,8 +19,7 @@ public class RubbishSpawner : MonoBehaviour
     private static float INTERVAL = 10f;
     private static int MAX_RUBBISH = 500;
 
-	[Require] Score.Writer ScoreWriter;
-	private float time = 0;
+	[Require] private Score.Writer ScoreWriter;
 
     private float nextCheckTime = -1;
 
