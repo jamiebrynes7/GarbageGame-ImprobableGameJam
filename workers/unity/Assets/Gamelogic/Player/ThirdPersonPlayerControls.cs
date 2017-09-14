@@ -66,6 +66,8 @@ namespace Assets.Gamelogic.Player
         {
             UpdateDesiredMovementDirection();
             UpdatePlayerToCameraRotation();
+			MoveCamera();
+			UpdateCameraRotation();
         }
 
         private void FixedUpdate()
@@ -76,12 +78,6 @@ namespace Assets.Gamelogic.Player
             UpdatePlayerControls();
             MovePlayer();
             UpdateAnimation();
-        }
-
-        private void LateUpdate()
-        {
-            MoveCamera();
-            UpdateCameraRotation();
         }
 
         public void SetIsDrunk(bool drunk){
