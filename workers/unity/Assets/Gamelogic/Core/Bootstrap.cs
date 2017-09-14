@@ -18,6 +18,7 @@ namespace Assets.Gamelogic.Core
 
 		// Boolean to handle whether to spawn player as binbag or binman. Defaults to binbag.
 		private bool isBinBag = true;
+		private string name = "Garbage";
 
         // Called when the Play button is pressed in Unity.
         public void Start()
@@ -40,7 +41,7 @@ namespace Assets.Gamelogic.Core
 				break;
 			case WorkerPlatform.UnityClient:
 				Application.targetFrameRate = SimulationSettings.TargetClientFramerate;
-				SpatialOS.OnConnected += () => CreatePlayer(this.isBinBag);
+				SpatialOS.OnConnected += () => CreatePlayer(this.isBinBag, this.name);
 				break;
 			}
 		}
@@ -56,16 +57,21 @@ namespace Assets.Gamelogic.Core
 			this.isBinBag = b;
 		}
 
+		// Set player name for player spawning
+		public void SetPlayerName(string name) {
+			this.name = name;
+		}
+
 		// Search for the PlayerCreator entity in the world in order to send a CreatePlayer command.
-		public static void CreatePlayer(bool isBinBag)
+		public static void CreatePlayer(bool isBinBag, string name)
 		{
 			var playerCreatorQuery = Query.HasComponent<PlayerCreation>().ReturnOnlyEntityIds();
 			SpatialOS.WorkerCommands.SendQuery(playerCreatorQuery)
-				.OnSuccess(result => OnSuccessfulPlayerCreatorQuery(result, isBinBag))
-				.OnFailure(details => OnFailedPlayerCreatorQuery(details, isBinBag));
+				.OnSuccess(result => OnSuccessfulPlayerCreatorQuery(result, isBinBag, name))
+				.OnFailure(details => OnFailedPlayerCreatorQuery(details, isBinBag, name));
 		}
 
-		private static void OnSuccessfulPlayerCreatorQuery(EntityQueryResult queryResult, bool isBinBag)
+		private static void OnSuccessfulPlayerCreatorQuery(EntityQueryResult queryResult, bool isBinBag, string name)
 		{
 			if (queryResult.EntityCount < 1)
 			{
@@ -74,28 +80,28 @@ namespace Assets.Gamelogic.Core
 			}
 
 			var playerCreatorEntityId = queryResult.Entities.First.Value.Key;
-			RequestPlayerCreation(playerCreatorEntityId, isBinBag);
+			RequestPlayerCreation(playerCreatorEntityId, isBinBag, name);
 		}
 
 		// Retry a failed search for the PlayerCreator entity after a short delay.
-		private static void OnFailedPlayerCreatorQuery(ICommandErrorDetails _, bool isBinBag)
+		private static void OnFailedPlayerCreatorQuery(ICommandErrorDetails _, bool isBinBag, string name)
 		{
 			Debug.LogError("PlayerCreator query failed. Spati   alOS workers probably haven't started yet. Try again in a few seconds.");
-			TimerUtils.WaitAndPerform(SimulationSettings.PlayerCreatorQueryRetrySecs, () => CreatePlayer(isBinBag));
+			TimerUtils.WaitAndPerform(SimulationSettings.PlayerCreatorQueryRetrySecs, () => CreatePlayer(isBinBag, name));
 		}
 
 		// Send a CreatePlayer command to the PLayerCreator entity requesting a Player entity be spawned.
-		private static void RequestPlayerCreation(EntityId playerCreatorEntityId, bool isBinBag)
+		private static void RequestPlayerCreation(EntityId playerCreatorEntityId, bool isBinBag, string name)
 		{
-			SpatialOS.WorkerCommands.SendCommand(PlayerCreation.Commands.CreatePlayer.Descriptor, new CreatePlayerRequest(isBinBag), playerCreatorEntityId)
-				.OnFailure(response => OnCreatePlayerFailure(response, playerCreatorEntityId, isBinBag));
+			SpatialOS.WorkerCommands.SendCommand(PlayerCreation.Commands.CreatePlayer.Descriptor, new CreatePlayerRequest(isBinBag, name), playerCreatorEntityId)
+				.OnFailure(response => OnCreatePlayerFailure(response, playerCreatorEntityId, isBinBag, name));
 		}
 
 		// Retry a failed creation of the Player entity after a short delay.
-		private static void OnCreatePlayerFailure(ICommandErrorDetails _, EntityId playerCreatorEntityId, bool isBinBag)
+		private static void OnCreatePlayerFailure(ICommandErrorDetails _, EntityId playerCreatorEntityId, bool isBinBag, string name)
 		{
 			Debug.LogWarning("CreatePlayer command failed - you probably tried to connect too soon. Try again in a few seconds.");
-			TimerUtils.WaitAndPerform(SimulationSettings.PlayerEntityCreationRetrySecs, () => RequestPlayerCreation(playerCreatorEntityId, isBinBag));
+			TimerUtils.WaitAndPerform(SimulationSettings.PlayerEntityCreationRetrySecs, () => RequestPlayerCreation(playerCreatorEntityId, isBinBag, name));
 		}
 	}
 }

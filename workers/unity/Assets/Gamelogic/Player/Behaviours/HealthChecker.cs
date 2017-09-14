@@ -10,6 +10,7 @@ using Improbable.Core;
 using UnityEngine.AI;
 using Improbable.Unity.Common.Core.Math;
 using Assets.Gamelogic.Utils;
+using UnityEngine.UI;
 
 namespace Assets.Gamelogic.Player.Behaviours
 {

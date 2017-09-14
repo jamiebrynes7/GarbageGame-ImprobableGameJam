@@ -42,13 +42,11 @@ namespace Assets.Gamelogic.World
 		// Callback for whenever one or more property of the Score component is updated
 		private void BinmanScoreUpdated(uint numberOfPoints)
 		{
-			Debug.Log ("bin man score got updated" + numberOfPoints);
 			updateBinmanGUI(numberOfPoints);
 		}
 
 		private void BinbagScoreUpdated(uint numberOfPoints)
 		{
-			Debug.Log ("bin bag score got updated" + numberOfPoints);
 			updateBinbagGUI(numberOfPoints);
 		}
 
