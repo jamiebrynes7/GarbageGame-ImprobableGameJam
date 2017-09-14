@@ -1,7 +1,21 @@
 package improbable.player;
 
+import "improbable/standard_library.schema";
+
+
+
+type TriggerData {
+	Coordinates position = 1;
+}
+
+type TriggerResponse {
+	Coordinates position = 1;
+}
+
 component BinbagInfo {
     id = 1302;
     int32 health = 1;
     uint32 size = 2;
+
+    command TriggerResponse binman_triggered(TriggerData);
 }

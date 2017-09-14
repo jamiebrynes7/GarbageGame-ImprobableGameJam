@@ -38,24 +38,20 @@ namespace Assets.Gamelogic.Player.Behaviours
 				Respawn ();
 			}
 		}
-
-		private static void OnSuccessfulPlayerCreation(EntityId id, BinbagInfo.Writer writer) {
-			SpatialOS.Commands.DeleteEntity(writer, id)
-				.OnSuccess(entityId => Debug.LogWarning("Deleted entity: " + entityId))
-				.OnFailure(errorDetails => Debug.LogWarning("Failed to delete entity with error: " + errorDetails.ErrorMessage));
-		}
-
-		private void Respawn() {
+			
+		private void Respawn() 
+		{
 			Vector3 position = PositionUtils.GetRandomPosition();
 			this.gameObject.transform.position = position;
-			var clientInfo = GetComponent<BinbagClientNPCInfo>();
-			if (clientInfo == null || !clientInfo.IsNPCBinBag ()) {
-				SpatialOS.Commands.SendCommand (BinbagInfoWriter, PlayerMovement.Commands.Respawn.Descriptor, new SpawnPosition (position.ToSpatialVector3d ()), this.gameObject.EntityId ())
-					.OnSuccess (entityId => BinbagInfoWriter.Send (new BinbagInfo.Update ().SetHealth (10).SetSize (0)))
-					.OnFailure (errorDetails => Debug.LogWarning ("Failed to respawn with error: " + errorDetails.ErrorMessage));
-			} else {
-				BinbagInfoWriter.Send (new BinbagInfo.Update ().SetHealth (10).SetSize (0));
-			}
+
+			SpatialOS.Commands.SendCommand (BinbagInfoWriter, PlayerMovement.Commands.Respawn.Descriptor, new SpawnPosition (position.ToSpatialVector3d ()), this.gameObject.EntityId ())
+				.OnSuccess (OnSpawnSuccess)
+				.OnFailure (errorDetails => Debug.LogWarning ("Failed to respawn with error: " + errorDetails.ErrorMessage));
+		}
+
+		private void OnSpawnSuccess(MovementResponse id) {
+			BinbagInfoWriter.Send (new BinbagInfo.Update ().SetHealth (10).SetSize (0));
+			this.transform.FindChild ("Model").gameObject.SetActive (true);
 		}
 	}
 }
