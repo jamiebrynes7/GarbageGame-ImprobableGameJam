@@ -1,0 +1,8 @@
+package improbable.player;
+
+import "improbable/standard_library.schema";
+
+component NPCInfo {
+    id = 1352;
+    option<Coordinates> destination = 1;
+}

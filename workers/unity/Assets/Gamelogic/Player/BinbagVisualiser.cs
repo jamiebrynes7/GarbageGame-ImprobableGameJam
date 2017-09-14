@@ -40,14 +40,14 @@ public class BinbagVisualiser : MonoBehaviour {
 		spinTransform.Rotate(Vector3.right * Time.deltaTime * SPIN_SPEED);
 	}
 
-	private void OnTriggerEnter(Collider other)
-	{
-		if (other.tag == "Binman")
-		{
-			this.transform.Find ("Model").gameObject.SetActive (false);
+	//private void OnTriggerEnter(Collider other)
+	//{
+	//	if (other.tag == "Binman")
+	//	{
+	//		this.transform.Find ("trashbag").gameObject.SetActive (false);
 
-		}
-	}
+	//	}
+	//}
 
 	private void LeanUpdated(Lean lean){
 		float leanAngle = LEAN_ANGLE;

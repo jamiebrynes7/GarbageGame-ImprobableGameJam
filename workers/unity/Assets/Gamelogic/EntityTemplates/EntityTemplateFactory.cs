@@ -8,6 +8,7 @@ using Improbable.Unity.Entity;
 using Improbable.Worker;
 using Improbable.Environment;
 using UnityEngine;
+using Improbable.Collections;
 
 namespace Assets.Gamelogic.EntityTemplates
 {
@@ -65,7 +66,7 @@ namespace Assets.Gamelogic.EntityTemplates
 		public static Entity CreateBinbagNPCTemplate(Vector3 position)
 		{
 			var template = EntityBuilder.Begin()
-				.AddPositionComponent(Vector3.zero, CommonRequirementSets.PhysicsOnly)
+                .AddPositionComponent(position, CommonRequirementSets.PhysicsOnly)
 				.AddMetadataComponent(SimulationSettings.BinbagPrefabName)
 				.SetPersistence(true)
 				.SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
@@ -73,6 +74,7 @@ namespace Assets.Gamelogic.EntityTemplates
 				.AddComponent(new PlayerMovement.Data(), CommonRequirementSets.PhysicsOnly)
 				.AddComponent(new BinbagVisuals.Data(Lean.NONE), CommonRequirementSets.PhysicsOnly)
 				.AddComponent(new BinbagInfo.Data(10, 0), CommonRequirementSets.PhysicsOnly)
+                .AddComponent(new NPCInfo.Data(new Option<Coordinates>()), CommonRequirementSets.PhysicsOnly)
 				.Build();
 
 			return template;
@@ -104,6 +106,23 @@ namespace Assets.Gamelogic.EntityTemplates
                 .AddComponent(new BinmanInfo.Data(false), CommonRequirementSets.PhysicsOnly)
 				.AddComponent(new StoneInfo.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
 				.AddComponent(new Nameplate.Data(name), CommonRequirementSets.PhysicsOrVisual)
+				.Build();
+
+			return template;
+		}
+
+        public static Entity CreateBinmanNPCTemplate(Vector3 position)
+		{
+			var template = EntityBuilder.Begin()
+                .AddPositionComponent(position, CommonRequirementSets.PhysicsOnly)
+				.AddMetadataComponent(SimulationSettings.BinmanPrefabName)
+				.SetPersistence(true)
+				.SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
+				.AddComponent(new PlayerRotation.Data(yaw: 0), CommonRequirementSets.PhysicsOnly)
+				.AddComponent(new PlayerMovement.Data(), CommonRequirementSets.PhysicsOnly)
+				.AddComponent(new BinmanInfo.Data(false), CommonRequirementSets.PhysicsOnly)
+				.AddComponent(new StoneInfo.Data(), CommonRequirementSets.PhysicsOnly)
+                .AddComponent(new NPCInfo.Data(new Option<Coordinates>()), CommonRequirementSets.PhysicsOnly)
 				.Build();
 
 			return template;

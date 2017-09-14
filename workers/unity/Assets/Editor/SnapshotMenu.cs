@@ -24,11 +24,19 @@ namespace Assets.Editor
 			//snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateCubeTemplate());
 			snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateWorldTrackerTemplate());
 
-			for (var i = 0; i < 0; i++)
+			for (var i = 0; i < 40; i++)
 			{
 				var position = PositionUtils.GetRandomPosition();
 				position.y = 0;
 				snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateBinbagNPCTemplate(position));
+			}
+
+			for (var i = 0; i < 40; i++)
+			{
+				var position = PositionUtils.GetRandomPosition();
+				position.y = 0;
+                //position = Vector3.zero;
+				snapshotEntities.Add(new EntityId(currentEntityId++), EntityTemplateFactory.CreateBinmanNPCTemplate(position));
 			}
 
 			for (var i = 0; i < 0; i++)

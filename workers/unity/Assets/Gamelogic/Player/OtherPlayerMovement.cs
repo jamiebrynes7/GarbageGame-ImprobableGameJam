@@ -43,7 +43,7 @@ namespace Assets.Gamelogic.Player
             PlayerRotationReader.RotationUpdateTriggered.Add(SaveRotationUpdate);
             DisableAuthoritativeRigidbodyBehaviour();
 
-            if(IsNPCBinBag()){
+            if(IsNPC()){
                 playerCollider.isTrigger = true;
             }
         }
@@ -54,7 +54,7 @@ namespace Assets.Gamelogic.Player
             PlayerRotationReader.RotationUpdateTriggered.Remove(SaveRotationUpdate);
             EnableAuthoritativeRigidbodyBehaviour();
 
-			if (IsNPCBinBag()){
+			if (IsNPC()){
                 playerCollider.isTrigger = false;
 			}
         }
@@ -71,10 +71,10 @@ namespace Assets.Gamelogic.Player
 
 		private void OnTriggerEnter(Collider other)
 		{
-			if (other.tag == "Binman" && model.activeSelf)
+            if (enabled && other.tag == "Binman" && model.activeSelf)
 			{
 				if (model == null) {
-					model = this.transform.Find ("Model").gameObject;
+					model = this.transform.Find ("trashbag").gameObject;
 				}
 				model.SetActive (false);
 				invisibleTimer = 1f;
@@ -206,13 +206,13 @@ namespace Assets.Gamelogic.Player
         private void EnableAuthoritativeRigidbodyBehaviour()
         {
             playerRigidbody.useGravity = true;
-            playerRigidbody.isKinematic = IsNPCBinBag();
+            playerRigidbody.isKinematic = IsNPC();
         }
 
-        private bool IsNPCBinBag(){
+        private bool IsNPC(){
             // YOLOYOLOYOLOYOLO
-            var clientInfo = GetComponent<BinbagClientNPCInfo>();
-            return clientInfo != null && clientInfo.IsNPCBinBag();
+            var clientInfo = GetComponent<ClientNPCInfo>();
+            return clientInfo != null && clientInfo.IsNPC();
         }
 
         class InterpolationData<T>
