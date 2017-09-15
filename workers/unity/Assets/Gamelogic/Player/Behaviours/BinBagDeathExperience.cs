@@ -40,11 +40,6 @@ public class BinBagDeathExperience : MonoBehaviour {
 
 	void Update()
 	{
-		if (transform.position.y > 3000 && !DeathGUI.activeSelf)
-		{
-			respawnMessage.text = "You have been sent to bin bag purgatory due to YOLO code and network latency. Luckily, you happen to have a 'Get Out of Purgatory' card in your binbag. How utterly convenient.";
-			DeathGUI.SetActive(true);
-		}
 		if (transform.position.y > 3000 && Input.GetKeyDown(KeyCode.R))
 		{
 			// Reset stone count
@@ -67,6 +62,15 @@ public class BinBagDeathExperience : MonoBehaviour {
 			SpatialOS.Commands.SendCommand (CACWriter, PlayerMovement.Commands.Respawn.Descriptor, new SpawnPosition (position.ToSpatialVector3d ()), this.gameObject.EntityId ())
 				.OnFailure (errorDetails => Debug.LogWarning ("Failed to respawn with error: " + errorDetails.ErrorMessage));
 		}
+		if (transform.position.y < 1000 && DeathGUI.activeSelf)
+		{
+			DeathGUI.SetActive(false);
+		}
+		else if (transform.position.y > 3000 && !DeathGUI.activeSelf)
+		{
+			respawnMessage.text = "You have been sent to bin bag purgatory due to YOLO code and network latency. Luckily, you happen to have a 'Get Out of Purgatory' card in your binbag. How utterly convenient.";
+			DeathGUI.SetActive(true);
+		}
 	}
 
 	private void OnTriggerEnter(Collider collision)
@@ -76,17 +80,20 @@ public class BinBagDeathExperience : MonoBehaviour {
 			{
 				respawnMessage.text = BINMAN_MESSAGE;
 				DeathGUI.SetActive(true);
+                transform.position += Vector3.up * 9000f;
 			}
 			else if (collision.tag == "RubbishTipWtf")
 			{
 				respawnMessage.text = TIP_MESSAGE;
 				DeathGUI.SetActive(true);
+                transform.position += Vector3.up * 9000f;
 			} else if (collision.tag == "StoneWtf")
 			{
 				if (++stoneCount == 10)
 				{
 					respawnMessage.text = STONE_MESSAGE;
 					DeathGUI.SetActive(true);
+                    transform.position += Vector3.up * 9000f;
 				}
 			}
 		}

@@ -33,6 +33,13 @@ namespace Assets.Gamelogic.Player
             float controlValue = Input.GetAxis("Horizontal");
             SetBinbagLean(controlValue);
             Vector3 inputDirection = new Vector3(controlValue * ROTATION_SPEED, 0, 1f);
+
+            if (Input.GetKey(KeyCode.RightControl) && Input.GetKeyDown(KeyCode.J)) {
+                //inputDirection = Vector3.up * 10;
+                GetComponent<Rigidbody>().AddForce(Vector3.up * 10, ForceMode.Impulse);
+            }
+
+
             Vector3 movementDirection = (transform.rotation * inputDirection).FlattenVector().normalized;
             targetVelocity = movementDirection * GetMovementSpeed();
         }
