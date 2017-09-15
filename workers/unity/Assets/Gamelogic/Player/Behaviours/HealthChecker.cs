@@ -42,7 +42,7 @@ namespace Assets.Gamelogic.Player.Behaviours
 		private void Respawn() 
 		{	
 			Vector3 position;
-			if (this.gameObject.GetComponent<BinbagClientNPCInfo>().IsNPCBinBag())
+			if (this.gameObject.GetComponent<ClientNPCInfo>().IsNPC())
 			{
 				position = PositionUtils.GetRandomPosition();
 			} 
