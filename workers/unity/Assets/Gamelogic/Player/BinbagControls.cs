@@ -22,7 +22,7 @@ namespace Assets.Gamelogic.Player
 
         private void OnCollisionEnter(Collision collision)
         {
-            if(collision.gameObject.tag == "Building"){
+            if(collision.gameObject.tag == "Building" || collision.gameObject.tag == "RoadBlock"){
                 //transform.rotation = Quaternion.Euler(0f, 180f, 0f) * transform.rotation;
                 transform.Rotate(0f, 180f, 0f);
             }
