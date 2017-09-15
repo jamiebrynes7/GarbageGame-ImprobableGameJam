@@ -40,8 +40,18 @@ namespace Assets.Gamelogic.Player.Behaviours
 		}
 			
 		private void Respawn() 
-		{
-			Vector3 position = PositionUtils.GetRandomPosition();
+		{	
+			Vector3 position;
+			if (this.gameObject.GetComponent<BinbagClientNPCInfo>().IsNPCBinBag())
+			{
+				position = PositionUtils.GetRandomPosition();
+			} 
+			else
+			{
+				// Place bin bag above ground somewhere. 
+				position = new Vector3(0f,9000f, 0f);
+			}
+
 			this.gameObject.transform.position = position;
 
 			SpatialOS.Commands.SendCommand (BinbagInfoWriter, PlayerMovement.Commands.Respawn.Descriptor, new SpawnPosition (position.ToSpatialVector3d ()), this.gameObject.EntityId ())
