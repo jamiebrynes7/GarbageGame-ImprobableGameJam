@@ -17,8 +17,8 @@ using System.Collections.Generic;
 public class BinManDie : MonoBehaviour
 {
 	float isFiredTimer;
-	float firedThreshold = 600;
-	int nofBinbags = 5;
+	float firedThreshold = 120;
+	int nofBinbags = 1;
 	Queue<float> lastBinbags = new Queue<float>();
 
 
@@ -56,10 +56,11 @@ public class BinManDie : MonoBehaviour
 			if (isFiredTimer < 3) {
 				isFiredTimer += Time.deltaTime;
 			} else if (firedCanvas.activeSelf) {
-				ToggleScreens(false);
 				isFiredTimer = 0;
 				lastBinbags.Clear ();
 				lastBinbags.Enqueue (Time.time);
+				ToggleScreens(false);
+
 			}
 		}
 	}
@@ -67,7 +68,9 @@ public class BinManDie : MonoBehaviour
 	private void ToggleScreens(bool isFired) {
 		firedCanvas.GetComponent<RawImage> ().enabled = isFired;
 		for (int i = 0; i < firedCanvas.transform.childCount; i++) {
-			firedCanvas.transform.GetChild (i).gameObject.SetActive(!isFired);
+			GameObject child = firedCanvas.transform.GetChild (i).gameObject;
+			if (child.name != "Death Panel")
+				child.gameObject.SetActive(!isFired);
 		}
 	}
 }
