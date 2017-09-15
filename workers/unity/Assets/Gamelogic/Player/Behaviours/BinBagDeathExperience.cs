@@ -30,7 +30,11 @@ public class BinBagDeathExperience : MonoBehaviour {
 	private void OnEnable()
 	{
 		screenActive = false;
-		DeathGUI = GameObject.Find("Canvas/Death Panel").gameObject;
+		DeathGUI = GameObject.Find("Death Panel").gameObject;
+		if (DeathGUI == null)
+		{
+			Debug.LogError("WTF");
+		}
 		respawnMessage = DeathGUI.transform.Find("DeathMessage").gameObject.GetComponent<Text>();
 		stoneCount = 0;
 	}
