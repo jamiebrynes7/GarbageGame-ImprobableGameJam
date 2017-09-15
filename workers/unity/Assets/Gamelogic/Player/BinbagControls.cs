@@ -38,7 +38,7 @@ namespace Assets.Gamelogic.Player
         }
 
         private float GetMovementSpeed(){
-            return 10f;
+            return 8f;
         }
 
         private void SetBinbagLean(float controlValue){

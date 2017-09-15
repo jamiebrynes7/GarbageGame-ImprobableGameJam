@@ -61,7 +61,7 @@ namespace Assets.Gamelogic.Player.Behaviours
 
 		private void OnSpawnSuccess(MovementResponse id) {
 			BinbagInfoWriter.Send (new BinbagInfo.Update ().SetHealth (10).SetSize (0));
-			this.transform.FindChild ("Model").gameObject.SetActive (true);
+			this.transform.Find ("Model").gameObject.SetActive (true);
 		}
 	}
 }

@@ -4,12 +4,12 @@ using Improbable.Core;
 using Improbable.Unity.Visualizer;
 using UnityEngine;
 
-public class BinbagClientNPCInfo : MonoBehaviour {
+public class ClientNPCInfo : MonoBehaviour {
 
     [Require]
     private ClientAuthorityCheck.Reader authorityCheck;
 
-    public bool IsNPCBinBag(){
+    public bool IsNPC(){
         return authorityCheck == null;
     }
 

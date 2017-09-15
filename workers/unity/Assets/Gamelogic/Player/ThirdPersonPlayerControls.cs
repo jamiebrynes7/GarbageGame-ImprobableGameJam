@@ -55,7 +55,7 @@ namespace Assets.Gamelogic.Player
 
 		private MovementResponse OnRespawn(SpawnPosition position, ICommandCallerInfo callerInfo) {
 			this.transform.position = position.position.ToUnityVector();
-			this.transform.FindChild ("Model").gameObject.SetActive (true);
+			this.transform.Find ("Model").gameObject.SetActive (true);
 			return new MovementResponse (position.position);
 		}
 
