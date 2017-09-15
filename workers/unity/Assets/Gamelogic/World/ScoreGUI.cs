@@ -39,6 +39,15 @@ namespace Assets.Gamelogic.World
 			ScoreReader.BinbagScoreUpdated.Remove(BinbagScoreUpdated);
 		}
 
+		private void Initialize() {
+			var binbagScore = GameObject.Find ("BinbagScore");
+			if (binbagScore != null)
+				binbagTotalPointsGUI = binbagScore.GetComponent<Text>();
+			var binmanScore = GameObject.Find ("BinmanScore");
+			if (binmanScore != null)
+				binmanTotalPointsGUI = GameObject.Find ("BinmanScore").GetComponent<Text>();
+		}
+
 		// Callback for whenever one or more property of the Score component is updated
 		private void BinmanScoreUpdated(uint numberOfPoints)
 		{
@@ -52,12 +61,18 @@ namespace Assets.Gamelogic.World
 
 		void updateBinmanGUI(uint score)
 		{
-			binmanTotalPointsGUI.text = score.ToString();
+			if (binmanTotalPointsGUI == null)
+				Initialize ();
+			if (binmanTotalPointsGUI != null)
+				binmanTotalPointsGUI.text = score.ToString();
 		}
 
 		void updateBinbagGUI(uint score)
 		{
-			binbagTotalPointsGUI.text = score.ToString();
+			if (binbagTotalPointsGUI == null)
+				Initialize ();
+			if (binbagTotalPointsGUI != null)
+				binbagTotalPointsGUI.text = score.ToString();
 		}
 	}
 }
