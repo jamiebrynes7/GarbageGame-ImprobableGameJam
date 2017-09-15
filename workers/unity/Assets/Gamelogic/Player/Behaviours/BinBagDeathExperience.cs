@@ -40,6 +40,11 @@ public class BinBagDeathExperience : MonoBehaviour {
 
 	void Update()
 	{
+		if (transform.position.y > 3000 && !DeathGUI.activeSelf)
+		{
+			respawnMessage.text = "You have been sent to bin bag purgatory due to YOLO code and network latency. Luckily, you happen to have a 'Get Out of Purgatory' card in your binbag. How utterly convenient.";
+			DeathGUI.SetActive(true);
+		}
 		if (transform.position.y > 3000 && Input.GetKeyDown(KeyCode.R))
 		{
 			// Reset stone count
