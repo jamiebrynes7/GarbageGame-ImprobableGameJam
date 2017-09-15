@@ -21,7 +21,6 @@ public class BinBagDeathExperience : MonoBehaviour {
 
 	private GameObject DeathGUI;
 	private Text respawnMessage;
-	private bool screenActive;
 
 	private int stoneCount;
 
@@ -29,17 +28,19 @@ public class BinBagDeathExperience : MonoBehaviour {
 
 	private void OnEnable()
 	{
-		screenActive = false;
 		GameObject c = GameObject.Find("Canvas");
-		Debug.Log(c);
 		DeathGUI = c.transform.Find("Death Panel").gameObject;
+		if (DeathGUI == null)
+		{
+			Debug.LogError("WTF");
+		}
 		respawnMessage = DeathGUI.transform.Find("DeathMessage").gameObject.GetComponent<Text>();
 		stoneCount = 0;
 	}
 
 	void Update()
 	{
-		if (screenActive && Input.GetKeyDown(KeyCode.R))
+		if (transform.position.y > 3000 && Input.GetKeyDown(KeyCode.R))
 		{
 			// Reset stone count
 			stoneCount = 0;
@@ -53,7 +54,7 @@ public class BinBagDeathExperience : MonoBehaviour {
 			
 			DeathGUI.SetActive(false);
 		} 
-		else if (screenActive && this.gameObject.transform.position.y < 3000 && this.gameObject.transform.position.y > 1000)
+		else if (this.gameObject.transform.position.y < 3000 && this.gameObject.transform.position.y > 1000)
 		{
 			// Don't let them fall too far.
 			Vector3 position = new Vector3(0f, 9000f, 0f);
@@ -65,24 +66,23 @@ public class BinBagDeathExperience : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider collision)
 	{
-		if (collision.tag == "Binman")
-		{
-			screenActive = true;
-			respawnMessage.text = BINMAN_MESSAGE;
-			DeathGUI.SetActive(true);
-		}
-		else if (collision.tag == "RubbishTipWtf")
-		{
-			screenActive = true;
-			respawnMessage.text = TIP_MESSAGE;
-			DeathGUI.SetActive(true);
-		} else if (collision.tag == "StoneWtf")
-		{
-			if (++stoneCount == 10)
+		if (CACWriter != null) {
+			if (collision.tag == "Binman")
 			{
-				screenActive = true;
-				respawnMessage.text = STONE_MESSAGE;
+				respawnMessage.text = BINMAN_MESSAGE;
 				DeathGUI.SetActive(true);
+			}
+			else if (collision.tag == "RubbishTipWtf")
+			{
+				respawnMessage.text = TIP_MESSAGE;
+				DeathGUI.SetActive(true);
+			} else if (collision.tag == "StoneWtf")
+			{
+				if (++stoneCount == 10)
+				{
+					respawnMessage.text = STONE_MESSAGE;
+					DeathGUI.SetActive(true);
+				}
 			}
 		}
 	}
