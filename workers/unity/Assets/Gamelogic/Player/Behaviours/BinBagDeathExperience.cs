@@ -30,9 +30,7 @@ public class BinBagDeathExperience : MonoBehaviour {
 	private void OnEnable()
 	{
 		screenActive = false;
-		GameObject c = GameObject.Find("Canvas");
-		Debug.Log(c);
-		DeathGUI = c.transform.Find("Death Panel").gameObject;
+		DeathGUI = GameObject.Find("Canvas/Death Panel").gameObject;
 		respawnMessage = DeathGUI.transform.Find("DeathMessage").gameObject.GetComponent<Text>();
 		stoneCount = 0;
 	}
@@ -52,6 +50,7 @@ public class BinBagDeathExperience : MonoBehaviour {
 				.OnFailure (errorDetails => Debug.LogWarning ("Failed to respawn with error: " + errorDetails.ErrorMessage));
 			
 			DeathGUI.SetActive(false);
+			screenActive = false;
 		} 
 		else if (screenActive && this.gameObject.transform.position.y < 3000 && this.gameObject.transform.position.y > 1000)
 		{
@@ -65,24 +64,26 @@ public class BinBagDeathExperience : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider collision)
 	{
-		if (collision.tag == "Binman")
-		{
-			screenActive = true;
-			respawnMessage.text = BINMAN_MESSAGE;
-			DeathGUI.SetActive(true);
-		}
-		else if (collision.tag == "RubbishTipWtf")
-		{
-			screenActive = true;
-			respawnMessage.text = TIP_MESSAGE;
-			DeathGUI.SetActive(true);
-		} else if (collision.tag == "StoneWtf")
-		{
-			if (++stoneCount == 10)
+		if (CACWriter != null) {
+			if (collision.tag == "Binman")
 			{
 				screenActive = true;
-				respawnMessage.text = STONE_MESSAGE;
+				respawnMessage.text = BINMAN_MESSAGE;
 				DeathGUI.SetActive(true);
+			}
+			else if (collision.tag == "RubbishTipWtf")
+			{
+				screenActive = true;
+				respawnMessage.text = TIP_MESSAGE;
+				DeathGUI.SetActive(true);
+			} else if (collision.tag == "StoneWtf")
+			{
+				if (++stoneCount == 10)
+				{
+					screenActive = true;
+					respawnMessage.text = STONE_MESSAGE;
+					DeathGUI.SetActive(true);
+				}
 			}
 		}
 	}
