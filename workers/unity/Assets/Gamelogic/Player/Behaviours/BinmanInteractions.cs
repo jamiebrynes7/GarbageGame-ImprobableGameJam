@@ -14,7 +14,7 @@ using Improbable.Unity.Common.Core.Math;
 [WorkerType(WorkerPlatform.UnityClient)]
 public class BinmanInteractions : MonoBehaviour
 {
-	private static float DROP_INTERVAL = 1f;
+	private static float DROP_INTERVAL = -1f;
 
 	[Require] StoneInfo.Writer StoneInfoWriter;
 

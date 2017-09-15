@@ -71,7 +71,7 @@ namespace Assets.Gamelogic.Player
 
 		private void OnTriggerEnter(Collider other)
 		{
-            if (enabled && other.tag == "Binman" && model.activeSelf)
+            if (enabled && tag == "Binbag" && other.tag == "Binman" && model.activeSelf)
 			{
 				if (model == null) {
 					model = this.transform.Find ("trashbag").gameObject;
